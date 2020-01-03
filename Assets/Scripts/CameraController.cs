@@ -4,59 +4,85 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-
-    //[SerializeField]
-    //AnimationCurve curve;
-
-    public float timer = 0f;
-    private Vector3 defaultPos;
+    public GameController gc;
 
     public float interval = 0.2f;
-    private bool isTouched, isTouchedHigh;
+    public bool isTouched, isTouchedHigh;
+
+    private Rigidbody2D rb;
+    private float timer = 0f;
+    private Vector3 defaultPos;
 
 	// Use this for initialization
-	void Awake ()
+    private void Awake ()
     {
         rb = GetComponent<Rigidbody2D>();
         defaultPos = transform.position;
 	}
 	
 	// Update is called once per frame
-	void Update ()
+    private void Update ()
     {
-        if (GameController.gameState == GameController.GameState.FINISH)
+        switch (gc.state)
         {
-            if (transform.position.y > defaultPos.y) { SetVelocity(-4); }
-            else
-            {
+            case GameController.State.PLAY:
+                timer += Time.deltaTime;
+                if (timer >= interval)
+                {
+                    isTouched = Physics2D.Linecast(
+                        new Vector2(-3, transform.position.y - 3),
+                        new Vector2(3, transform.position.y - 3),
+                        1 << (int)GameController.Layer.OjuGrounded
+                    );
+                    isTouchedHigh = Physics2D.Linecast(
+                        new Vector2(-3, transform.position.y),
+                        new Vector2(3, transform.position.y),
+                        1 << (int)GameController.Layer.OjuGrounded
+                    );
+                    timer = 0f;
+                }
+
+                if (isTouched && isTouchedHigh) { SetVelocity(6); } // カメラとお重の相対高によって移動速度を変化
+                else if (isTouched) { SetVelocity(3); }
+                else if (transform.position.y > defaultPos.y) { SetVelocity(-6); }
+                else { SetVelocity(0); }
+                break;
+            case GameController.State.TOSCORE: // プレイ終了後、初期位置までカメラを移動させる
+                if (transform.position.y > defaultPos.y)
+                {
+                    SetVelocity(-4);
+                }
+                else
+                {
+                    SetVelocity(0);
+                    transform.position = defaultPos;
+                    gc.OnScore();
+                }
+                break;
+            case GameController.State.SCORE: // プレイ終了後、初期位置までカメラを移動させる
+            case GameController.State.RESULT:
+                isTouched = Physics2D.Linecast(
+                    new Vector2(-3, transform.position.y + 2),
+                    new Vector2(3, transform.position.y + 2),
+                    1 << (int)GameController.Layer.ScoreLine
+                );
+
+                if (isTouched)
+                {
+                    SetVelocity(4);
+                }
+                else
+                {
+                    SetVelocity(0);
+                }
+                break;
+            case GameController.State.TOTITLE:
                 SetVelocity(0);
-                GameController.gameState = GameController.GameState.RESULT;
-            }
+                transform.position = defaultPos;
+                isTouched = false;
+                isTouchedHigh = false;
+                break;
         }
-
-        if (GameController.gameState != GameController.GameState.PLAY) { return; }
-
-        timer += Time.deltaTime;
-        if (timer >= interval)
-        {
-            isTouched = Physics2D.Linecast(
-                new Vector2(-3, transform.position.y - 3),
-                new Vector2(3, transform.position.y - 3),
-                1 << (int)GameController.LayerName.OjuGrounded
-            );
-            isTouchedHigh = Physics2D.Linecast(
-                new Vector2(-3, transform.position.y),
-                new Vector2(3, transform.position.y),
-                1 << (int)GameController.LayerName.OjuGrounded
-            );
-            timer = 0f;
-        }
-
-        if (isTouchedHigh) { SetVelocity(4); }
-        else if (isTouched) { SetVelocity(2); }
-        else if (transform.position.y > defaultPos.y) { SetVelocity(-6); }
-        else { SetVelocity(0); }
 	}
 
     private void SetVelocity(int speed)

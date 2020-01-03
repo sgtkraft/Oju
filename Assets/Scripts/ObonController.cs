@@ -4,40 +4,48 @@ using UnityEngine;
 
 public class ObonController : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    public GameController gc;
 
-    private float timer;
     public float interval = 0.5f;
-    private int direction;
 
-	// Use this for initialization
-	void Awake ()
+    private Rigidbody2D rb;
+    private Vector3 defaultPos;
+    private int direction;
+    private float timer;
+
+    // Use this for initialization
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        defaultPos = transform.position;
         direction = (Random.Range(-1, 1) == 0) ? 1 : -1;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-        if (GameController.gameState == GameController.GameState.PLAY)
+        switch (gc.state)
         {
-            timer += Time.deltaTime;
-            if (timer >= interval || transform.position.x < -1.45f || transform.position.x > 1.45f)
-            {
-                direction *= -1;
-                timer = 0f;
-            }
-            SetVelocity();
+            case GameController.State.PLAY:
+                timer += Time.deltaTime;
+                if (timer >= interval || transform.position.x < -1.45f || transform.position.x > 1.45f)
+                {
+                    direction *= -1;
+                    timer = 0f;
+                }
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                SetVelocity();
+                break;
+            case GameController.State.TOTITLE:
+                transform.position = defaultPos;
+                break;
+            default:
+                rb.bodyType = RigidbodyType2D.Static;
+                break;
         }
+    }
 
-        if (GameController.gameState == GameController.GameState.FINISH)
-        {
-            rb.bodyType = RigidbodyType2D.Static;
-        }
-	}
-
-    private void SetVelocity()
+    void SetVelocity()
     {
         rb.velocity = new Vector2(Random.Range(0, 4) * direction, 0f);
     }

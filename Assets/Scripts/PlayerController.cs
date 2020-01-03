@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public GameController gc;
+
     // 生成したいPrefab
     public GameObject prefab;
     public Transform prefabParent;
@@ -18,13 +20,14 @@ public class PlayerController : MonoBehaviour
 	// Use this for initialization
 	private void Awake ()
     {
-	}
+        prefab.GetComponent<OjuController>().Init(gc);
+    }
 	
 	// Update is called once per frame
 	private void Update ()
     {
-        if (GameController.gameState == GameController.GameState.STANDBY ||
-            GameController.gameState == GameController.GameState.PLAY)
+        if (gc.state == GameController.State.STANDBY ||
+            gc.state == GameController.State.PLAY)
         {
             cursor.SetActive(true);
             cursor.transform.position = GetCursorPosition();
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour
         // マウス入力で左クリックをした瞬間
         if (Input.GetMouseButtonDown(0))
         {
-            if (GameController.gameState == GameController.GameState.TITLE)
+            if (gc.state == GameController.State.TITLE)
             {
                 clickPosition = Input.mousePosition;
                 clickPosition.z = 10f;
@@ -49,7 +52,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (GameController.gameState == GameController.GameState.PLAY)
+            if (gc.state == GameController.State.PLAY)
             {
                 // オブジェクト生成 : オブジェクト(GameObject), 位置(Vector3), 角度(Quaternion)
                 // ScreenToWorldPoint(位置(Vector3))：スクリーン座標をワールド座標に変換する

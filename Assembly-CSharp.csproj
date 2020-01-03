@@ -53,6 +53,9 @@
     <UnityVersion>2018.2.17f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -182,12 +185,15 @@
     <Compile Include="Assets\MaterialUI\Utils\PropertyDrawers\ObserveAttribute\ObserveAttribute.cs" />
     <Compile Include="Assets\MaterialUI\Utils\PropertyDrawers\PopupAttribute\PopupAttribute.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\CommonDefine.cs" />
+    <Compile Include="Assets\Scripts\EditorExWindow.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MessageController.cs" />
     <Compile Include="Assets\Scripts\ObonController.cs" />
     <Compile Include="Assets\Scripts\OjuController.cs" />
     <Compile Include="Assets\Scripts\OsechiController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\ScoreController.cs" />
     <None Include="Assets\MaterialUI\README.txt" />
     <None Include="Assets\MaterialUI\Materials\ShadowedRipple.shader" />
     <None Include="Assets\MaterialUI\Materials\Ripple.shader" />
