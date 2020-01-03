@@ -3466,6 +3466,8 @@ public:
 	float ___timer_9;
 	// UnityEngine.Vector3 CameraController::defaultPos
 	Vector3_t3722313464  ___defaultPos_10;
+	// System.Boolean CameraController::isScored
+	bool ___isScored_11;
 
 public:
 	inline static int32_t get_offset_of_gc_4() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___gc_4)); }
@@ -3525,6 +3527,14 @@ public:
 	{
 		___defaultPos_10 = value;
 	}
+
+	inline static int32_t get_offset_of_isScored_11() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___isScored_11)); }
+	inline bool get_isScored_11() const { return ___isScored_11; }
+	inline bool* get_address_of_isScored_11() { return &___isScored_11; }
+	inline void set_isScored_11(bool value)
+	{
+		___isScored_11 = value;
+	}
 };
 
 #ifdef __clang__
@@ -3573,8 +3583,10 @@ public:
 	int32_t ___score_17;
 	// System.Single GameController::timer
 	float ___timer_18;
+	// System.Boolean GameController::isScored
+	bool ___isScored_19;
 	// UnityEngine.Texture2D GameController::currentScreenShotTexture
-	Texture2D_t3840446185 * ___currentScreenShotTexture_19;
+	Texture2D_t3840446185 * ___currentScreenShotTexture_20;
 
 public:
 	inline static int32_t get_offset_of_state_4() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___state_4)); }
@@ -3709,13 +3721,21 @@ public:
 		___timer_18 = value;
 	}
 
-	inline static int32_t get_offset_of_currentScreenShotTexture_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_19)); }
-	inline Texture2D_t3840446185 * get_currentScreenShotTexture_19() const { return ___currentScreenShotTexture_19; }
-	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_19() { return &___currentScreenShotTexture_19; }
-	inline void set_currentScreenShotTexture_19(Texture2D_t3840446185 * value)
+	inline static int32_t get_offset_of_isScored_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___isScored_19)); }
+	inline bool get_isScored_19() const { return ___isScored_19; }
+	inline bool* get_address_of_isScored_19() { return &___isScored_19; }
+	inline void set_isScored_19(bool value)
 	{
-		___currentScreenShotTexture_19 = value;
-		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_19), value);
+		___isScored_19 = value;
+	}
+
+	inline static int32_t get_offset_of_currentScreenShotTexture_20() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_20)); }
+	inline Texture2D_t3840446185 * get_currentScreenShotTexture_20() const { return ___currentScreenShotTexture_20; }
+	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_20() { return &___currentScreenShotTexture_20; }
+	inline void set_currentScreenShotTexture_20(Texture2D_t3840446185 * value)
+	{
+		___currentScreenShotTexture_20 = value;
+		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_20), value);
 	}
 };
 
@@ -7477,7 +7497,7 @@ extern const int32_t g_FieldOffsetTable2296[1] =
 	PopupAttribute_t2541137003::get_offset_of_list_0(),
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2297 = { sizeof (CameraController_t3346819214), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2297[7] = 
+extern const int32_t g_FieldOffsetTable2297[8] = 
 {
 	CameraController_t3346819214::get_offset_of_gc_4(),
 	CameraController_t3346819214::get_offset_of_interval_5(),
@@ -7486,6 +7506,7 @@ extern const int32_t g_FieldOffsetTable2297[7] =
 	CameraController_t3346819214::get_offset_of_rb_8(),
 	CameraController_t3346819214::get_offset_of_timer_9(),
 	CameraController_t3346819214::get_offset_of_defaultPos_10(),
+	CameraController_t3346819214::get_offset_of_isScored_11(),
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2298 = { sizeof (ColorDef_t742771190), -1, sizeof(ColorDef_t742771190_StaticFields), 0 };
 extern const int32_t g_FieldOffsetTable2298[4] = 
@@ -7496,7 +7517,7 @@ extern const int32_t g_FieldOffsetTable2298[4] =
 	ColorDef_t742771190_StaticFields::get_offset_of_gold_3(),
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2299 = { sizeof (GameController_t2330501625), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2299[16] = 
+extern const int32_t g_FieldOffsetTable2299[17] = 
 {
 	GameController_t2330501625::get_offset_of_state_4(),
 	GameController_t2330501625::get_offset_of_animator_5(),
@@ -7513,7 +7534,8 @@ extern const int32_t g_FieldOffsetTable2299[16] =
 	GameController_t2330501625::get_offset_of_yuka_16(),
 	GameController_t2330501625::get_offset_of_score_17(),
 	GameController_t2330501625::get_offset_of_timer_18(),
-	GameController_t2330501625::get_offset_of_currentScreenShotTexture_19(),
+	GameController_t2330501625::get_offset_of_isScored_19(),
+	GameController_t2330501625::get_offset_of_currentScreenShotTexture_20(),
 };
 #ifdef __clang__
 #pragma clang diagnostic pop

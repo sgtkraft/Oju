@@ -775,8 +775,10 @@ public:
 	int32_t ___score_17;
 	// System.Single GameController::timer
 	float ___timer_18;
+	// System.Boolean GameController::isScored
+	bool ___isScored_19;
 	// UnityEngine.Texture2D GameController::currentScreenShotTexture
-	Texture2D_t3840446185 * ___currentScreenShotTexture_19;
+	Texture2D_t3840446185 * ___currentScreenShotTexture_20;
 
 public:
 	inline static int32_t get_offset_of_state_4() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___state_4)); }
@@ -911,13 +913,21 @@ public:
 		___timer_18 = value;
 	}
 
-	inline static int32_t get_offset_of_currentScreenShotTexture_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_19)); }
-	inline Texture2D_t3840446185 * get_currentScreenShotTexture_19() const { return ___currentScreenShotTexture_19; }
-	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_19() { return &___currentScreenShotTexture_19; }
-	inline void set_currentScreenShotTexture_19(Texture2D_t3840446185 * value)
+	inline static int32_t get_offset_of_isScored_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___isScored_19)); }
+	inline bool get_isScored_19() const { return ___isScored_19; }
+	inline bool* get_address_of_isScored_19() { return &___isScored_19; }
+	inline void set_isScored_19(bool value)
 	{
-		___currentScreenShotTexture_19 = value;
-		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_19), value);
+		___isScored_19 = value;
+	}
+
+	inline static int32_t get_offset_of_currentScreenShotTexture_20() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_20)); }
+	inline Texture2D_t3840446185 * get_currentScreenShotTexture_20() const { return ___currentScreenShotTexture_20; }
+	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_20() { return &___currentScreenShotTexture_20; }
+	inline void set_currentScreenShotTexture_20(Texture2D_t3840446185 * value)
+	{
+		___currentScreenShotTexture_20 = value;
+		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_20), value);
 	}
 };
 
@@ -939,20 +949,22 @@ struct  ObonController_t4151098746  : public MonoBehaviour_t3962482529
 public:
 	// GameController ObonController::gc
 	GameController_t2330501625 * ___gc_4;
+	// UnityEngine.UI.Text ObonController::debugTxt
+	Text_t1901882714 * ___debugTxt_5;
 	// UnityEngine.GameObject ObonController::cursorGo
-	GameObject_t1113636619 * ___cursorGo_5;
+	GameObject_t1113636619 * ___cursorGo_6;
 	// System.Single ObonController::interval
-	float ___interval_6;
+	float ___interval_7;
 	// UnityEngine.Rigidbody2D ObonController::rb
-	Rigidbody2D_t939494601 * ___rb_7;
+	Rigidbody2D_t939494601 * ___rb_8;
 	// UnityEngine.Vector3 ObonController::defaultPos
-	Vector3_t3722313464  ___defaultPos_8;
+	Vector3_t3722313464  ___defaultPos_9;
 	// System.Int32 ObonController::direction
-	int32_t ___direction_9;
+	int32_t ___direction_10;
 	// System.Single ObonController::timer
-	float ___timer_10;
+	float ___timer_11;
 	// System.Boolean ObonController::isRendered
-	bool ___isRendered_11;
+	bool ___isRendered_12;
 
 public:
 	inline static int32_t get_offset_of_gc_4() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___gc_4)); }
@@ -964,62 +976,71 @@ public:
 		Il2CppCodeGenWriteBarrier((&___gc_4), value);
 	}
 
-	inline static int32_t get_offset_of_cursorGo_5() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___cursorGo_5)); }
-	inline GameObject_t1113636619 * get_cursorGo_5() const { return ___cursorGo_5; }
-	inline GameObject_t1113636619 ** get_address_of_cursorGo_5() { return &___cursorGo_5; }
-	inline void set_cursorGo_5(GameObject_t1113636619 * value)
+	inline static int32_t get_offset_of_debugTxt_5() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___debugTxt_5)); }
+	inline Text_t1901882714 * get_debugTxt_5() const { return ___debugTxt_5; }
+	inline Text_t1901882714 ** get_address_of_debugTxt_5() { return &___debugTxt_5; }
+	inline void set_debugTxt_5(Text_t1901882714 * value)
 	{
-		___cursorGo_5 = value;
-		Il2CppCodeGenWriteBarrier((&___cursorGo_5), value);
+		___debugTxt_5 = value;
+		Il2CppCodeGenWriteBarrier((&___debugTxt_5), value);
 	}
 
-	inline static int32_t get_offset_of_interval_6() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___interval_6)); }
-	inline float get_interval_6() const { return ___interval_6; }
-	inline float* get_address_of_interval_6() { return &___interval_6; }
-	inline void set_interval_6(float value)
+	inline static int32_t get_offset_of_cursorGo_6() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___cursorGo_6)); }
+	inline GameObject_t1113636619 * get_cursorGo_6() const { return ___cursorGo_6; }
+	inline GameObject_t1113636619 ** get_address_of_cursorGo_6() { return &___cursorGo_6; }
+	inline void set_cursorGo_6(GameObject_t1113636619 * value)
 	{
-		___interval_6 = value;
+		___cursorGo_6 = value;
+		Il2CppCodeGenWriteBarrier((&___cursorGo_6), value);
 	}
 
-	inline static int32_t get_offset_of_rb_7() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___rb_7)); }
-	inline Rigidbody2D_t939494601 * get_rb_7() const { return ___rb_7; }
-	inline Rigidbody2D_t939494601 ** get_address_of_rb_7() { return &___rb_7; }
-	inline void set_rb_7(Rigidbody2D_t939494601 * value)
+	inline static int32_t get_offset_of_interval_7() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___interval_7)); }
+	inline float get_interval_7() const { return ___interval_7; }
+	inline float* get_address_of_interval_7() { return &___interval_7; }
+	inline void set_interval_7(float value)
 	{
-		___rb_7 = value;
-		Il2CppCodeGenWriteBarrier((&___rb_7), value);
+		___interval_7 = value;
 	}
 
-	inline static int32_t get_offset_of_defaultPos_8() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___defaultPos_8)); }
-	inline Vector3_t3722313464  get_defaultPos_8() const { return ___defaultPos_8; }
-	inline Vector3_t3722313464 * get_address_of_defaultPos_8() { return &___defaultPos_8; }
-	inline void set_defaultPos_8(Vector3_t3722313464  value)
+	inline static int32_t get_offset_of_rb_8() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___rb_8)); }
+	inline Rigidbody2D_t939494601 * get_rb_8() const { return ___rb_8; }
+	inline Rigidbody2D_t939494601 ** get_address_of_rb_8() { return &___rb_8; }
+	inline void set_rb_8(Rigidbody2D_t939494601 * value)
 	{
-		___defaultPos_8 = value;
+		___rb_8 = value;
+		Il2CppCodeGenWriteBarrier((&___rb_8), value);
 	}
 
-	inline static int32_t get_offset_of_direction_9() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___direction_9)); }
-	inline int32_t get_direction_9() const { return ___direction_9; }
-	inline int32_t* get_address_of_direction_9() { return &___direction_9; }
-	inline void set_direction_9(int32_t value)
+	inline static int32_t get_offset_of_defaultPos_9() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___defaultPos_9)); }
+	inline Vector3_t3722313464  get_defaultPos_9() const { return ___defaultPos_9; }
+	inline Vector3_t3722313464 * get_address_of_defaultPos_9() { return &___defaultPos_9; }
+	inline void set_defaultPos_9(Vector3_t3722313464  value)
 	{
-		___direction_9 = value;
+		___defaultPos_9 = value;
 	}
 
-	inline static int32_t get_offset_of_timer_10() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___timer_10)); }
-	inline float get_timer_10() const { return ___timer_10; }
-	inline float* get_address_of_timer_10() { return &___timer_10; }
-	inline void set_timer_10(float value)
+	inline static int32_t get_offset_of_direction_10() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___direction_10)); }
+	inline int32_t get_direction_10() const { return ___direction_10; }
+	inline int32_t* get_address_of_direction_10() { return &___direction_10; }
+	inline void set_direction_10(int32_t value)
 	{
-		___timer_10 = value;
+		___direction_10 = value;
 	}
 
-	inline static int32_t get_offset_of_isRendered_11() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___isRendered_11)); }
-	inline bool get_isRendered_11() const { return ___isRendered_11; }
-	inline bool* get_address_of_isRendered_11() { return &___isRendered_11; }
-	inline void set_isRendered_11(bool value)
+	inline static int32_t get_offset_of_timer_11() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___timer_11)); }
+	inline float get_timer_11() const { return ___timer_11; }
+	inline float* get_address_of_timer_11() { return &___timer_11; }
+	inline void set_timer_11(float value)
 	{
-		___isRendered_11 = value;
+		___timer_11 = value;
+	}
+
+	inline static int32_t get_offset_of_isRendered_12() { return static_cast<int32_t>(offsetof(ObonController_t4151098746, ___isRendered_12)); }
+	inline bool get_isRendered_12() const { return ___isRendered_12; }
+	inline bool* get_address_of_isRendered_12() { return &___isRendered_12; }
+	inline void set_isRendered_12(bool value)
+	{
+		___isRendered_12 = value;
 	}
 };
 
@@ -1417,58 +1438,58 @@ struct  MessageController_t3176670886  : public GameController_t2330501625
 {
 public:
 	// UnityEngine.GameObject MessageController::prefab
-	GameObject_t1113636619 * ___prefab_20;
+	GameObject_t1113636619 * ___prefab_21;
 	// UnityEngine.Transform MessageController::prefabParent
-	Transform_t3600365921 * ___prefabParent_21;
+	Transform_t3600365921 * ___prefabParent_22;
 	// UnityEngine.GameObject MessageController::cursor
-	GameObject_t1113636619 * ___cursor_22;
+	GameObject_t1113636619 * ___cursor_23;
 	// UnityEngine.Vector3 MessageController::cursorPosition
-	Vector3_t3722313464  ___cursorPosition_23;
+	Vector3_t3722313464  ___cursorPosition_24;
 	// UnityEngine.Vector3 MessageController::clickPosition
-	Vector3_t3722313464  ___clickPosition_24;
+	Vector3_t3722313464  ___clickPosition_25;
 
 public:
-	inline static int32_t get_offset_of_prefab_20() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___prefab_20)); }
-	inline GameObject_t1113636619 * get_prefab_20() const { return ___prefab_20; }
-	inline GameObject_t1113636619 ** get_address_of_prefab_20() { return &___prefab_20; }
-	inline void set_prefab_20(GameObject_t1113636619 * value)
+	inline static int32_t get_offset_of_prefab_21() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___prefab_21)); }
+	inline GameObject_t1113636619 * get_prefab_21() const { return ___prefab_21; }
+	inline GameObject_t1113636619 ** get_address_of_prefab_21() { return &___prefab_21; }
+	inline void set_prefab_21(GameObject_t1113636619 * value)
 	{
-		___prefab_20 = value;
-		Il2CppCodeGenWriteBarrier((&___prefab_20), value);
+		___prefab_21 = value;
+		Il2CppCodeGenWriteBarrier((&___prefab_21), value);
 	}
 
-	inline static int32_t get_offset_of_prefabParent_21() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___prefabParent_21)); }
-	inline Transform_t3600365921 * get_prefabParent_21() const { return ___prefabParent_21; }
-	inline Transform_t3600365921 ** get_address_of_prefabParent_21() { return &___prefabParent_21; }
-	inline void set_prefabParent_21(Transform_t3600365921 * value)
+	inline static int32_t get_offset_of_prefabParent_22() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___prefabParent_22)); }
+	inline Transform_t3600365921 * get_prefabParent_22() const { return ___prefabParent_22; }
+	inline Transform_t3600365921 ** get_address_of_prefabParent_22() { return &___prefabParent_22; }
+	inline void set_prefabParent_22(Transform_t3600365921 * value)
 	{
-		___prefabParent_21 = value;
-		Il2CppCodeGenWriteBarrier((&___prefabParent_21), value);
+		___prefabParent_22 = value;
+		Il2CppCodeGenWriteBarrier((&___prefabParent_22), value);
 	}
 
-	inline static int32_t get_offset_of_cursor_22() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___cursor_22)); }
-	inline GameObject_t1113636619 * get_cursor_22() const { return ___cursor_22; }
-	inline GameObject_t1113636619 ** get_address_of_cursor_22() { return &___cursor_22; }
-	inline void set_cursor_22(GameObject_t1113636619 * value)
+	inline static int32_t get_offset_of_cursor_23() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___cursor_23)); }
+	inline GameObject_t1113636619 * get_cursor_23() const { return ___cursor_23; }
+	inline GameObject_t1113636619 ** get_address_of_cursor_23() { return &___cursor_23; }
+	inline void set_cursor_23(GameObject_t1113636619 * value)
 	{
-		___cursor_22 = value;
-		Il2CppCodeGenWriteBarrier((&___cursor_22), value);
+		___cursor_23 = value;
+		Il2CppCodeGenWriteBarrier((&___cursor_23), value);
 	}
 
-	inline static int32_t get_offset_of_cursorPosition_23() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___cursorPosition_23)); }
-	inline Vector3_t3722313464  get_cursorPosition_23() const { return ___cursorPosition_23; }
-	inline Vector3_t3722313464 * get_address_of_cursorPosition_23() { return &___cursorPosition_23; }
-	inline void set_cursorPosition_23(Vector3_t3722313464  value)
+	inline static int32_t get_offset_of_cursorPosition_24() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___cursorPosition_24)); }
+	inline Vector3_t3722313464  get_cursorPosition_24() const { return ___cursorPosition_24; }
+	inline Vector3_t3722313464 * get_address_of_cursorPosition_24() { return &___cursorPosition_24; }
+	inline void set_cursorPosition_24(Vector3_t3722313464  value)
 	{
-		___cursorPosition_23 = value;
+		___cursorPosition_24 = value;
 	}
 
-	inline static int32_t get_offset_of_clickPosition_24() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___clickPosition_24)); }
-	inline Vector3_t3722313464  get_clickPosition_24() const { return ___clickPosition_24; }
-	inline Vector3_t3722313464 * get_address_of_clickPosition_24() { return &___clickPosition_24; }
-	inline void set_clickPosition_24(Vector3_t3722313464  value)
+	inline static int32_t get_offset_of_clickPosition_25() { return static_cast<int32_t>(offsetof(MessageController_t3176670886, ___clickPosition_25)); }
+	inline Vector3_t3722313464  get_clickPosition_25() const { return ___clickPosition_25; }
+	inline Vector3_t3722313464 * get_address_of_clickPosition_25() { return &___clickPosition_25; }
+	inline void set_clickPosition_25(Vector3_t3722313464  value)
 	{
-		___clickPosition_24 = value;
+		___clickPosition_25 = value;
 	}
 };
 
@@ -1523,23 +1544,24 @@ extern const int32_t g_FieldOffsetTable2302[4] =
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2303 = { sizeof (MessageController_t3176670886), -1, 0, 0 };
 extern const int32_t g_FieldOffsetTable2303[5] = 
 {
-	MessageController_t3176670886::get_offset_of_prefab_20(),
-	MessageController_t3176670886::get_offset_of_prefabParent_21(),
-	MessageController_t3176670886::get_offset_of_cursor_22(),
-	MessageController_t3176670886::get_offset_of_cursorPosition_23(),
-	MessageController_t3176670886::get_offset_of_clickPosition_24(),
+	MessageController_t3176670886::get_offset_of_prefab_21(),
+	MessageController_t3176670886::get_offset_of_prefabParent_22(),
+	MessageController_t3176670886::get_offset_of_cursor_23(),
+	MessageController_t3176670886::get_offset_of_cursorPosition_24(),
+	MessageController_t3176670886::get_offset_of_clickPosition_25(),
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2304 = { sizeof (ObonController_t4151098746), -1, 0, 0 };
-extern const int32_t g_FieldOffsetTable2304[8] = 
+extern const int32_t g_FieldOffsetTable2304[9] = 
 {
 	ObonController_t4151098746::get_offset_of_gc_4(),
-	ObonController_t4151098746::get_offset_of_cursorGo_5(),
-	ObonController_t4151098746::get_offset_of_interval_6(),
-	ObonController_t4151098746::get_offset_of_rb_7(),
-	ObonController_t4151098746::get_offset_of_defaultPos_8(),
-	ObonController_t4151098746::get_offset_of_direction_9(),
-	ObonController_t4151098746::get_offset_of_timer_10(),
-	ObonController_t4151098746::get_offset_of_isRendered_11(),
+	ObonController_t4151098746::get_offset_of_debugTxt_5(),
+	ObonController_t4151098746::get_offset_of_cursorGo_6(),
+	ObonController_t4151098746::get_offset_of_interval_7(),
+	ObonController_t4151098746::get_offset_of_rb_8(),
+	ObonController_t4151098746::get_offset_of_defaultPos_9(),
+	ObonController_t4151098746::get_offset_of_direction_10(),
+	ObonController_t4151098746::get_offset_of_timer_11(),
+	ObonController_t4151098746::get_offset_of_isRendered_12(),
 };
 extern const Il2CppTypeDefinitionSizes g_typeDefinitionSize2305 = { sizeof (OjuController_t270946356), -1, 0, 0 };
 extern const int32_t g_FieldOffsetTable2305[6] = 

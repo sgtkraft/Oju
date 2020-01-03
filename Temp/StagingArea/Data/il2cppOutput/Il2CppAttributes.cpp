@@ -42767,13 +42767,6 @@ static void PopupAttribute_t2541137003_CustomAttributesCacheGenerator_PopupAttri
 		ParamArrayAttribute__ctor_m2680615839(tmp, NULL);
 	}
 }
-static void GameController_t2330501625_CustomAttributesCacheGenerator_waitImgGo(CustomAttributesCache* cache)
-{
-	{
-		FormerlySerializedAsAttribute_t2859083114 * tmp = (FormerlySerializedAsAttribute_t2859083114 *)cache->attributes[0];
-		FormerlySerializedAsAttribute__ctor_m520861771(tmp, il2cpp_codegen_string_new_wrapper("\x77\x61\x69\x74\x49\x6D\x61\x67\x65\x47\x6F"), NULL);
-	}
-}
 static void GameController_t2330501625_CustomAttributesCacheGenerator_GameController_UpdateCurrentScreenShot_m2014738040(CustomAttributesCache* cache)
 {
 	{
@@ -42830,7 +42823,7 @@ static void U3CPrivateImplementationDetailsU3E_t3057255366_CustomAttributesCache
 		CompilerGeneratedAttribute__ctor_m3151881902(tmp, NULL);
 	}
 }
-extern const CustomAttributesCacheGenerator g_AttributeGenerators[3846] = 
+extern const CustomAttributesCacheGenerator g_AttributeGenerators[3845] = 
 {
 	NULL,
 	g_mscorlib_Assembly_CustomAttributesCacheGenerator,
@@ -46669,7 +46662,6 @@ extern const CustomAttributesCacheGenerator g_AttributeGenerators[3846] =
 	StringExtensions_t317212587_CustomAttributesCacheGenerator_StringExtensions_FuzzyMatch_m1840378626,
 	ObserveAttribute_t989046445_CustomAttributesCacheGenerator_ObserveAttribute__ctor_m2375922514____callbackNames0,
 	PopupAttribute_t2541137003_CustomAttributesCacheGenerator_PopupAttribute__ctor_m4262355339____list0,
-	GameController_t2330501625_CustomAttributesCacheGenerator_waitImgGo,
 	GameController_t2330501625_CustomAttributesCacheGenerator_GameController_UpdateCurrentScreenShot_m2014738040,
 	U3CUpdateCurrentScreenShotU3Ec__Iterator0_t1789868779_CustomAttributesCacheGenerator,
 	U3CUpdateCurrentScreenShotU3Ec__Iterator0_t1789868779_CustomAttributesCacheGenerator_U3CUpdateCurrentScreenShotU3Ec__Iterator0__ctor_m1518916586,

@@ -12,16 +12,18 @@ public class CameraController : MonoBehaviour
     private Rigidbody2D rb;
     private float timer = 0f;
     private Vector3 defaultPos;
+    private bool isScored;
 
 	// Use this for initialization
-    private void Awake ()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         defaultPos = transform.position;
+        isScored = false;
 	}
 	
 	// Update is called once per frame
-    private void Update ()
+    private void Update()
     {
         switch (gc.state)
         {
@@ -56,6 +58,11 @@ public class CameraController : MonoBehaviour
                 {
                     SetVelocity(0);
                     transform.position = defaultPos;
+                    if(!isScored)
+                    {
+                        isScored = true;
+                        gc.OnScore();
+                    }
                 }
                 break;
             case GameController.State.SCORE: // プレイ終了後、初期位置までカメラを移動させる
@@ -80,6 +87,7 @@ public class CameraController : MonoBehaviour
                 transform.position = defaultPos;
                 isTouched = false;
                 isTouchedHigh = false;
+                isScored = false;
                 break;
         }
 	}
