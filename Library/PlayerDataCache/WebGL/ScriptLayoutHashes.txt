@@ -1,6 +1,6 @@
 WebGL
 PlayerPath?
-/Users/suga-taku_pc/Documents/Projects/Pages/Pages_Web/oju
+/Users/suga-taku_pc/Documents/Projects/Oju/Release/oju
 SceneListBegin?
 Assets/Scenes/Main.unity
 SceneListEnd?
@@ -159,7 +159,7 @@ dec29dd9988f510570d56a9fdeba6b48 Assembly-CSharp.dll:MaterialUI.DialogDatePicker
 6de2691d7f7b1c637f97641f31d8e7fc Assembly-CSharp.dll:MaterialUI.DialogCheckboxOption
 f16835701e71dd5d6fb1fed4b7aff1d8 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 f7afc4fb221eb6a0333f3cc9046c6317 Assembly-CSharp.dll:MaterialUI.DialogTimePickerClock
-b24d2c3080465400fbccf44c476fe470 Assembly-CSharp.dll:.ObonController
+c10226102a3af3ecffd9f0a463c9b26e Assembly-CSharp.dll:.ObonController
 486cd95c82d8305219c352c06b776e1f Assembly-CSharp.dll:.Example13
 0929958c24383fd55a9de08c0a3210a7 Assembly-CSharp.dll:.OsechiController
 6aef2ebeac38f015ca556de96390f1a9 Assembly-CSharp.dll:MaterialUI.TabView
