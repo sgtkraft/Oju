@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MessageController : MonoBehaviour
+public class MessageController : GameController
 {
     // 生成したいPrefab
     public GameObject prefab;
@@ -23,8 +23,8 @@ public class MessageController : MonoBehaviour
 	// Update is called once per frame
 	private void Update ()
     {
-        if (GameController.gameState == GameController.GameState.STANDBY ||
-            GameController.gameState == GameController.GameState.PLAY)
+        if (state == GameController.State.STANDBY ||
+            state == GameController.State.PLAY)
         {
             cursor.transform.position = GetCursorPosition();
         }
@@ -32,7 +32,7 @@ public class MessageController : MonoBehaviour
         // マウス入力で左クリックをした瞬間
         if (Input.GetMouseButtonDown(0))
         {
-            if (GameController.gameState == GameController.GameState.TITLE)
+            if (state == GameController.State.TITLE)
             {
                 clickPosition = Input.mousePosition;
                 clickPosition.z = 10f;
@@ -44,7 +44,7 @@ public class MessageController : MonoBehaviour
                 }
             }
 
-            if (GameController.gameState == GameController.GameState.PLAY)
+            if (state == GameController.State.PLAY)
             {
                 // オブジェクト生成 : オブジェクト(GameObject), 位置(Vector3), 角度(Quaternion)
                 // ScreenToWorldPoint(位置(Vector3))：スクリーン座標をワールド座標に変換する

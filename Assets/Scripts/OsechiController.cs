@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class OsechiController : MonoBehaviour
 {
+    public GameController gc;
+
     private Rigidbody2D rb;
     private float timer = 0f;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
 	// Update is called once per frame
-	void Update ()
+    private void Update ()
     {
-        if (GameController.gameState == GameController.GameState.TITLE)
+        switch (gc.state)
         {
-            timer += Time.deltaTime;
-            if (timer > 3f) { gameObject.layer = (int)GameController.LayerName.OsechiTransparent; }
-        }
-
-        if (GameController.gameState == GameController.GameState.TOSTANDBY)
-        {
-            gameObject.layer = (int)GameController.LayerName.OsechiTransparent;
-            rb.velocity = new Vector2(8f, 0);
-        }
-
-        if (GameController.gameState == GameController.GameState.FINISH)
-        {
-            rb.bodyType = RigidbodyType2D.Static;
+            case GameController.State.TITLE:
+                timer += Time.deltaTime;
+                if (timer > 3f) { gameObject.layer = (int)GameController.Layer.OsechiTransparent; }
+                break;
+            case GameController.State.TOSTANDBY:
+                gameObject.layer = (int)GameController.Layer.OsechiTransparent;
+                rb.velocity = new Vector2(8f, 0);
+                break;
+            case GameController.State.SCORE:
+                rb.bodyType = RigidbodyType2D.Static;
+                break;
+            case GameController.State.TOTITLE:
+                Destroy(this.gameObject);
+                break;
         }
 
         if (transform.position.y < -8)

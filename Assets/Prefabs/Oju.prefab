@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50651474196536078}
   - component: {fileID: 114641403911995024}
   m_Layer: 10
-  m_Name: datemaki
+  m_Name: Datemaki
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 50181163046520508}
   - component: {fileID: 114598420043066568}
   m_Layer: 10
-  m_Name: kazunoko
+  m_Name: Kazunoko
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 50757975103229260}
   - component: {fileID: 114327369833988304}
   m_Layer: 10
-  m_Name: ebi
+  m_Name: Ebi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 50914995399032020}
   - component: {fileID: 114863081720774962}
   m_Layer: 10
-  m_Name: kuromame
+  m_Name: Kuromame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 50750851784016376}
   - component: {fileID: 114018907214602584}
   m_Layer: 10
-  m_Name: kobumaki
+  m_Name: Kobumaki
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -676,6 +676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114158382424394904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -687,6 +688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114327369833988304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,6 +700,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114598420043066568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -709,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114615130260650566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -720,6 +724,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c4d8bdf7c8d4b848da4d72e146cc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
+  corners:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!114 &114641403911995024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -731,6 +741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114863081720774962
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -742,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!114 &114979397044923570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -753,6 +765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54019e17ad983426fab2faf80c30c6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gc: {fileID: 0}
 --- !u!212 &212366972947044194
 SpriteRenderer:
   m_ObjectHideFlags: 1
