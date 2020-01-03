@@ -6,6 +6,8 @@ public class ObonController : MonoBehaviour
 {
     public GameController gc;
 
+    public UnityEngine.UI.Text debugTxt;
+
     public GameObject cursorGo;
     public float interval = 0.5f;
 
@@ -74,5 +76,6 @@ public class ObonController : MonoBehaviour
         cursorGo.SetActive(!isRendered);
         cursorGo.GetComponent<RectTransform>().anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x, 0f, 0f);
         isRendered = false;
+        debugTxt.text = "IsRendered: " + isRendered + "\nCursor: " + cursorGo.GetComponent<RectTransform>().anchoredPosition.x;
     }
 }
