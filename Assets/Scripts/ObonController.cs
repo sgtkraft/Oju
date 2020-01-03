@@ -62,17 +62,17 @@ public class ObonController : MonoBehaviour
 
     private void OnWillRenderObject()
     {
-        if (Camera.current.name == "MainCamera" && Camera.current.name != "SceneCamera")
-        {
-            isRendered = true;
-        }
+        //if (Camera.current.name == "MainCamera" && Camera.current.name != "SceneCamera")
+        //{
+        //    isRendered = true;
+        //}
+        isRendered = (Camera.current.name == "MainCamera");
     }
 
     private void ShowCursor()
     {
         cursorGo.SetActive(!isRendered);
         cursorGo.GetComponent<RectTransform>().anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x, 0f, 0f);
-        //cursorGo.transform.position = new Vector3(transform.position.x, 0f, 0f);
         isRendered = false;
     }
 }
