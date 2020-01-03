@@ -889,6 +889,7 @@ extern String_t* _stringLiteral1445748060;
 extern String_t* _stringLiteral147276847;
 extern String_t* _stringLiteral1487803557;
 extern String_t* _stringLiteral1487803573;
+extern String_t* _stringLiteral1510195223;
 extern String_t* _stringLiteral1543523173;
 extern String_t* _stringLiteral1554760241;
 extern String_t* _stringLiteral1579363545;
@@ -1116,6 +1117,7 @@ extern String_t* _stringLiteral4044797829;
 extern String_t* _stringLiteral4044797845;
 extern String_t* _stringLiteral4044797899;
 extern String_t* _stringLiteral4044797915;
+extern String_t* _stringLiteral4056748395;
 extern String_t* _stringLiteral4067395913;
 extern String_t* _stringLiteral4072247616;
 extern String_t* _stringLiteral4079097803;
@@ -12729,6 +12731,8 @@ public:
 	float ___timer_9;
 	// UnityEngine.Vector3 CameraController::defaultPos
 	Vector3_t3722313464  ___defaultPos_10;
+	// System.Boolean CameraController::isScored
+	bool ___isScored_11;
 
 public:
 	inline static int32_t get_offset_of_gc_4() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___gc_4)); }
@@ -12787,6 +12791,14 @@ public:
 	inline void set_defaultPos_10(Vector3_t3722313464  value)
 	{
 		___defaultPos_10 = value;
+	}
+
+	inline static int32_t get_offset_of_isScored_11() { return static_cast<int32_t>(offsetof(CameraController_t3346819214, ___isScored_11)); }
+	inline bool get_isScored_11() const { return ___isScored_11; }
+	inline bool* get_address_of_isScored_11() { return &___isScored_11; }
+	inline void set_isScored_11(bool value)
+	{
+		___isScored_11 = value;
 	}
 };
 
@@ -13458,8 +13470,10 @@ public:
 	int32_t ___score_17;
 	// System.Single GameController::timer
 	float ___timer_18;
+	// System.Boolean GameController::isScored
+	bool ___isScored_19;
 	// UnityEngine.Texture2D GameController::currentScreenShotTexture
-	Texture2D_t3840446185 * ___currentScreenShotTexture_19;
+	Texture2D_t3840446185 * ___currentScreenShotTexture_20;
 
 public:
 	inline static int32_t get_offset_of_state_4() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___state_4)); }
@@ -13594,13 +13608,21 @@ public:
 		___timer_18 = value;
 	}
 
-	inline static int32_t get_offset_of_currentScreenShotTexture_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_19)); }
-	inline Texture2D_t3840446185 * get_currentScreenShotTexture_19() const { return ___currentScreenShotTexture_19; }
-	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_19() { return &___currentScreenShotTexture_19; }
-	inline void set_currentScreenShotTexture_19(Texture2D_t3840446185 * value)
+	inline static int32_t get_offset_of_isScored_19() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___isScored_19)); }
+	inline bool get_isScored_19() const { return ___isScored_19; }
+	inline bool* get_address_of_isScored_19() { return &___isScored_19; }
+	inline void set_isScored_19(bool value)
 	{
-		___currentScreenShotTexture_19 = value;
-		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_19), value);
+		___isScored_19 = value;
+	}
+
+	inline static int32_t get_offset_of_currentScreenShotTexture_20() { return static_cast<int32_t>(offsetof(GameController_t2330501625, ___currentScreenShotTexture_20)); }
+	inline Texture2D_t3840446185 * get_currentScreenShotTexture_20() const { return ___currentScreenShotTexture_20; }
+	inline Texture2D_t3840446185 ** get_address_of_currentScreenShotTexture_20() { return &___currentScreenShotTexture_20; }
+	inline void set_currentScreenShotTexture_20(Texture2D_t3840446185 * value)
+	{
+		___currentScreenShotTexture_20 = value;
+		Il2CppCodeGenWriteBarrier((&___currentScreenShotTexture_20), value);
 	}
 };
 
@@ -23423,6 +23445,8 @@ extern "C" IL2CPP_METHOD_ATTR bool RaycastHit2D_op_Implicit_m653385179 (RuntimeO
 extern "C" IL2CPP_METHOD_ATTR void CameraController_SetVelocity_m3496303517 (CameraController_t3346819214 * __this, int32_t ___speed0, const RuntimeMethod* method);
 // System.Void UnityEngine.Transform::set_position(UnityEngine.Vector3)
 extern "C" IL2CPP_METHOD_ATTR void Transform_set_position_m3387557959 (Transform_t3600365921 * __this, Vector3_t3722313464  p0, const RuntimeMethod* method);
+// System.Void GameController::OnScore()
+extern "C" IL2CPP_METHOD_ATTR void GameController_OnScore_m3193331913 (GameController_t2330501625 * __this, const RuntimeMethod* method);
 // System.Void UnityEngine.Rigidbody2D::set_velocity(UnityEngine.Vector2)
 extern "C" IL2CPP_METHOD_ATTR void Rigidbody2D_set_velocity_m2898400508 (Rigidbody2D_t939494601 * __this, Vector2_t2156229523  p0, const RuntimeMethod* method);
 // System.Void UnityEngine.Color32::.ctor(System.Byte,System.Byte,System.Byte,System.Byte)
@@ -25299,6 +25323,7 @@ extern "C" IL2CPP_METHOD_ATTR void CameraController_Awake_m4266067818 (CameraCon
 		Transform_t3600365921 * L_1 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
 		Vector3_t3722313464  L_2 = Transform_get_position_m36019626(L_1, /*hidden argument*/NULL);
 		__this->set_defaultPos_10(L_2);
+		__this->set_isScored_11((bool)0);
 		return;
 	}
 }
@@ -25345,20 +25370,20 @@ extern "C" IL2CPP_METHOD_ATTR void CameraController_Update_m2075811523 (CameraCo
 			}
 			case 2:
 			{
-				goto IL_01ca;
+				goto IL_01e7;
 			}
 			case 3:
 			{
-				goto IL_01ca;
+				goto IL_01e7;
 			}
 			case 4:
 			{
-				goto IL_024a;
+				goto IL_0267;
 			}
 		}
 	}
 	{
-		goto IL_0275;
+		goto IL_0299;
 	}
 
 IL_002d:
@@ -25470,7 +25495,7 @@ IL_0170:
 
 IL_0177:
 	{
-		goto IL_0275;
+		goto IL_0299;
 	}
 
 IL_017c:
@@ -25488,7 +25513,7 @@ IL_017c:
 	}
 	{
 		CameraController_SetVelocity_m3496303517(__this, ((int32_t)-6), /*hidden argument*/NULL);
-		goto IL_01c5;
+		goto IL_01e2;
 	}
 
 IL_01ad:
@@ -25497,66 +25522,77 @@ IL_01ad:
 		Transform_t3600365921 * L_40 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
 		Vector3_t3722313464  L_41 = __this->get_defaultPos_10();
 		Transform_set_position_m3387557959(L_40, L_41, /*hidden argument*/NULL);
-	}
-
-IL_01c5:
-	{
-		goto IL_0275;
-	}
-
-IL_01ca:
-	{
-		Transform_t3600365921 * L_42 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
-		Vector3_t3722313464  L_43 = Transform_get_position_m36019626(L_42, /*hidden argument*/NULL);
-		V_7 = L_43;
-		float L_44 = (&V_7)->get_y_3();
-		Vector2_t2156229523  L_45;
-		memset(&L_45, 0, sizeof(L_45));
-		Vector2__ctor_m3970636864((&L_45), (-3.0f), ((float)il2cpp_codegen_add((float)L_44, (float)(2.0f))), /*hidden argument*/NULL);
-		Transform_t3600365921 * L_46 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
-		Vector3_t3722313464  L_47 = Transform_get_position_m36019626(L_46, /*hidden argument*/NULL);
-		V_8 = L_47;
-		float L_48 = (&V_8)->get_y_3();
-		Vector2_t2156229523  L_49;
-		memset(&L_49, 0, sizeof(L_49));
-		Vector2__ctor_m3970636864((&L_49), (3.0f), ((float)il2cpp_codegen_add((float)L_48, (float)(2.0f))), /*hidden argument*/NULL);
-		IL2CPP_RUNTIME_CLASS_INIT(Physics2D_t1528932956_il2cpp_TypeInfo_var);
-		RaycastHit2D_t2279581989  L_50 = Physics2D_Linecast_m2347689996(NULL /*static, unused*/, L_45, L_49, ((int32_t)16384), /*hidden argument*/NULL);
-		bool L_51 = RaycastHit2D_op_Implicit_m653385179(NULL /*static, unused*/, L_50, /*hidden argument*/NULL);
-		__this->set_isTouched_6(L_51);
-		bool L_52 = __this->get_isTouched_6();
-		if (!L_52)
+		bool L_42 = __this->get_isScored_11();
+		if (L_42)
 		{
-			goto IL_023e;
+			goto IL_01e2;
+		}
+	}
+	{
+		__this->set_isScored_11((bool)1);
+		GameController_t2330501625 * L_43 = __this->get_gc_4();
+		GameController_OnScore_m3193331913(L_43, /*hidden argument*/NULL);
+	}
+
+IL_01e2:
+	{
+		goto IL_0299;
+	}
+
+IL_01e7:
+	{
+		Transform_t3600365921 * L_44 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
+		Vector3_t3722313464  L_45 = Transform_get_position_m36019626(L_44, /*hidden argument*/NULL);
+		V_7 = L_45;
+		float L_46 = (&V_7)->get_y_3();
+		Vector2_t2156229523  L_47;
+		memset(&L_47, 0, sizeof(L_47));
+		Vector2__ctor_m3970636864((&L_47), (-3.0f), ((float)il2cpp_codegen_add((float)L_46, (float)(2.0f))), /*hidden argument*/NULL);
+		Transform_t3600365921 * L_48 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
+		Vector3_t3722313464  L_49 = Transform_get_position_m36019626(L_48, /*hidden argument*/NULL);
+		V_8 = L_49;
+		float L_50 = (&V_8)->get_y_3();
+		Vector2_t2156229523  L_51;
+		memset(&L_51, 0, sizeof(L_51));
+		Vector2__ctor_m3970636864((&L_51), (3.0f), ((float)il2cpp_codegen_add((float)L_50, (float)(2.0f))), /*hidden argument*/NULL);
+		IL2CPP_RUNTIME_CLASS_INIT(Physics2D_t1528932956_il2cpp_TypeInfo_var);
+		RaycastHit2D_t2279581989  L_52 = Physics2D_Linecast_m2347689996(NULL /*static, unused*/, L_47, L_51, ((int32_t)16384), /*hidden argument*/NULL);
+		bool L_53 = RaycastHit2D_op_Implicit_m653385179(NULL /*static, unused*/, L_52, /*hidden argument*/NULL);
+		__this->set_isTouched_6(L_53);
+		bool L_54 = __this->get_isTouched_6();
+		if (!L_54)
+		{
+			goto IL_025b;
 		}
 	}
 	{
 		CameraController_SetVelocity_m3496303517(__this, 4, /*hidden argument*/NULL);
-		goto IL_0245;
+		goto IL_0262;
 	}
 
-IL_023e:
+IL_025b:
 	{
 		CameraController_SetVelocity_m3496303517(__this, 0, /*hidden argument*/NULL);
 	}
 
-IL_0245:
+IL_0262:
 	{
-		goto IL_0275;
+		goto IL_0299;
 	}
 
-IL_024a:
+IL_0267:
 	{
 		CameraController_SetVelocity_m3496303517(__this, 0, /*hidden argument*/NULL);
-		Transform_t3600365921 * L_53 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
-		Vector3_t3722313464  L_54 = __this->get_defaultPos_10();
-		Transform_set_position_m3387557959(L_53, L_54, /*hidden argument*/NULL);
+		Transform_t3600365921 * L_55 = Component_get_transform_m3162698980(__this, /*hidden argument*/NULL);
+		Vector3_t3722313464  L_56 = __this->get_defaultPos_10();
+		Transform_set_position_m3387557959(L_55, L_56, /*hidden argument*/NULL);
 		__this->set_isTouched_6((bool)0);
 		__this->set_isTouchedHigh_7((bool)0);
-		goto IL_0275;
+		__this->set_isScored_11((bool)0);
+		goto IL_0299;
 	}
 
-IL_0275:
+IL_0299:
 	{
 		return;
 	}
@@ -34827,6 +34863,7 @@ extern "C" IL2CPP_METHOD_ATTR void GameController_OnTitle_m1993658617 (GameContr
 		__this->set_state_4(7);
 		Image_t2670269651 * L_0 = __this->get_timerImage_7();
 		Behaviour_set_enabled_m20417929(L_0, (bool)0, /*hidden argument*/NULL);
+		__this->set_isScored_19((bool)0);
 		Text_t1901882714 * L_1 = __this->get_messageText_8();
 		IL2CPP_RUNTIME_CLASS_INIT(String_t_il2cpp_TypeInfo_var);
 		String_t* L_2 = ((String_t_StaticFields*)il2cpp_codegen_static_fields_for(String_t_il2cpp_TypeInfo_var))->get_Empty_2();
@@ -35007,13 +35044,30 @@ extern "C" IL2CPP_METHOD_ATTR void GameController_OnScore_m3193331913 (GameContr
 		s_Il2CppMethodInitialized = true;
 	}
 	{
+		bool L_0 = __this->get_isScored_19();
+		if (L_0)
+		{
+			goto IL_001d;
+		}
+	}
+	{
+		__this->set_isScored_19((bool)1);
+		IL2CPP_RUNTIME_CLASS_INIT(Debug_t3317548046_il2cpp_TypeInfo_var);
+		Debug_Log_m4051431634(NULL /*static, unused*/, _stringLiteral1510195223, /*hidden argument*/NULL);
+		return;
+	}
+
+IL_001d:
+	{
+		IL2CPP_RUNTIME_CLASS_INIT(Debug_t3317548046_il2cpp_TypeInfo_var);
+		Debug_Log_m4051431634(NULL /*static, unused*/, _stringLiteral4056748395, /*hidden argument*/NULL);
 		__this->set_state_4(5);
-		Text_t1901882714 * L_0 = __this->get_messageText_8();
+		Text_t1901882714 * L_1 = __this->get_messageText_8();
 		IL2CPP_RUNTIME_CLASS_INIT(String_t_il2cpp_TypeInfo_var);
-		String_t* L_1 = ((String_t_StaticFields*)il2cpp_codegen_static_fields_for(String_t_il2cpp_TypeInfo_var))->get_Empty_2();
-		VirtActionInvoker1< String_t* >::Invoke(73 /* System.Void UnityEngine.UI.Text::set_text(System.String) */, L_0, L_1);
-		GameObject_t1113636619 * L_2 = __this->get_scoreTitle_11();
-		GameObject_SetActive_m796801857(L_2, (bool)1, /*hidden argument*/NULL);
+		String_t* L_2 = ((String_t_StaticFields*)il2cpp_codegen_static_fields_for(String_t_il2cpp_TypeInfo_var))->get_Empty_2();
+		VirtActionInvoker1< String_t* >::Invoke(73 /* System.Void UnityEngine.UI.Text::set_text(System.String) */, L_1, L_2);
+		GameObject_t1113636619 * L_3 = __this->get_scoreTitle_11();
+		GameObject_SetActive_m796801857(L_3, (bool)1, /*hidden argument*/NULL);
 		return;
 	}
 }
@@ -35291,7 +35345,7 @@ IL_003b:
 IL_0040:
 	{
 		GameController_t2330501625 * L_4 = __this->get_U24this_0();
-		Texture2D_t3840446185 * L_5 = L_4->get_currentScreenShotTexture_19();
+		Texture2D_t3840446185 * L_5 = L_4->get_currentScreenShotTexture_20();
 		int32_t L_6 = Screen_get_width_m345039817(NULL /*static, unused*/, /*hidden argument*/NULL);
 		int32_t L_7 = Screen_get_height_m1623532518(NULL /*static, unused*/, /*hidden argument*/NULL);
 		Rect_t2360479859  L_8;
@@ -35299,7 +35353,7 @@ IL_0040:
 		Rect__ctor_m2614021312((&L_8), (0.0f), (0.0f), (((float)((float)L_6))), (((float)((float)L_7))), /*hidden argument*/NULL);
 		Texture2D_ReadPixels_m3395504488(L_5, L_8, 0, 0, /*hidden argument*/NULL);
 		GameController_t2330501625 * L_9 = __this->get_U24this_0();
-		Texture2D_t3840446185 * L_10 = L_9->get_currentScreenShotTexture_19();
+		Texture2D_t3840446185 * L_10 = L_9->get_currentScreenShotTexture_20();
 		Texture2D_Apply_m2271746283(L_10, /*hidden argument*/NULL);
 		__this->set_U24PC_3((-1));
 	}
