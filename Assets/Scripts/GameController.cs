@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using MaterialUI;
 using CommonDefine;
@@ -40,7 +41,6 @@ public class GameController : MonoBehaviour
     public Image timerImage;
 
     public Text messageText;
-    [UnityEngine.Serialization.FormerlySerializedAs("waitImageGo")]
     public GameObject waitImgGo;
     public GameObject subMessage, scoreTitle;
     public GameObject quitButton, shareButton, retryButton;
@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
 
     public int score;
     private float timer = 10f;
+    private bool isScored;
 
     // Use this for initialization
     private void Awake()
@@ -92,6 +93,7 @@ public class GameController : MonoBehaviour
     {
         state = State.TOTITLE;
         timerImage.enabled = false;
+        isScored = false;
 
         messageText.text = "";
         subMessage.SetActive(false);
@@ -167,6 +169,14 @@ public class GameController : MonoBehaviour
 
     public void OnScore()
     {
+        if(!isScored)
+        {
+            isScored = true;
+            Debug.Log("scored");
+            return;
+        }
+
+        Debug.Log("scored2");
         state = State.SCORE;
 
         messageText.text = "";
