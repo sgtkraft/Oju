@@ -42,7 +42,7 @@ public class CameraController : MonoBehaviour
                     timer = 0f;
                 }
 
-                if (isTouched && isTouchedHigh) { SetVelocity(6); } // カメラとお重の相対高によって移動速度を変化
+                if (isTouched && isTouchedHigh) { SetVelocity(5); } // カメラとお重の相対高によって移動速度を変化
                 else if (isTouched) { SetVelocity(3); }
                 else if (transform.position.y > defaultPos.y) { SetVelocity(-6); }
                 else { SetVelocity(0); }
@@ -50,13 +50,12 @@ public class CameraController : MonoBehaviour
             case GameController.State.TOSCORE: // プレイ終了後、初期位置までカメラを移動させる
                 if (transform.position.y > defaultPos.y)
                 {
-                    SetVelocity(-4);
+                    SetVelocity(-6);
                 }
                 else
                 {
                     SetVelocity(0);
                     transform.position = defaultPos;
-                    gc.OnScore();
                 }
                 break;
             case GameController.State.SCORE: // プレイ終了後、初期位置までカメラを移動させる

@@ -12,6 +12,7 @@ public class ScoreController : MonoBehaviour
     public GameObject panel, valueParent, lineParent, line;
 
     private Rigidbody2D rb;
+    private Collider2D col;
     private Vector3 defaultPos;
     private List<Image> imageList = new List<Image>();
 
@@ -20,6 +21,7 @@ public class ScoreController : MonoBehaviour
     void Awake()
     {
         rb = line.GetComponent<Rigidbody2D>();
+        col = line.GetComponent<Collider2D>();
         defaultPos = line.transform.position;
     }
 	
@@ -47,9 +49,18 @@ public class ScoreController : MonoBehaviour
                 panel.SetActive(true);
                 lineParent.SetActive(true);
 
-                isScored = Physics2D.Linecast(
-                    new Vector2(-3, line.transform.position.y),
-                    new Vector2(3, line.transform.position.y),
+                //isScored = Physics2D.Linecast(
+                //    new Vector2(-3, line.transform.position.y),
+                //    new Vector2(3, line.transform.position.y),
+                //    1 << (int)GameController.Layer.OjuGrounded | (int)GameController.Layer.Oju
+                //);
+
+                isScored = Physics2D.BoxCast(
+                    new Vector2(line.transform.position.x, line.transform.position.y),
+                    new Vector2(line.transform.lossyScale.x, line.transform.lossyScale.y),
+                    0f,
+                    Vector2.zero,
+                    0f,
                     1 << (int)GameController.Layer.OjuGrounded | (int)GameController.Layer.Oju
                 );
 
@@ -96,7 +107,7 @@ public class ScoreController : MonoBehaviour
     /// </summary>
     private int GetScore()
     {
-        float score = line.transform.localPosition.y * 10;
+        float score = line.transform.localPosition.y;
         Debug.Log(score);
         if (Mathf.Approximately(score % 1, 0.5f))
         {
