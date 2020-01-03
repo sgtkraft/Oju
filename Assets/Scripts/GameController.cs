@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using MaterialUI;
 using CommonDefine;
 
 public class GameController : MonoBehaviour
@@ -12,10 +13,10 @@ public class GameController : MonoBehaviour
         TOSTANDBY,
         STANDBY,
         PLAY,
-        FINISH,
+        //FINISH,
         TOSCORE,
         SCORE,
-        TORESULT,
+        //TORESULT,
         RESULT,
         TOTITLE,
     }
@@ -39,6 +40,8 @@ public class GameController : MonoBehaviour
     public Image timerImage;
 
     public Text messageText;
+    [UnityEngine.Serialization.FormerlySerializedAs("waitImageGo")]
+    public GameObject waitImgGo;
     public GameObject subMessage, scoreTitle;
     public GameObject quitButton, shareButton, retryButton;
     public GameObject kumoMain, yuka;
@@ -53,6 +56,7 @@ public class GameController : MonoBehaviour
 
         messageText.text = "";
         subMessage.SetActive(false);
+        waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
         quitButton.SetActive(false);
         shareButton.SetActive(false);
@@ -69,9 +73,7 @@ public class GameController : MonoBehaviour
         {
             case State.STANDBY:
                 if (Input.GetMouseButtonDown(0)) { StartStandby(); }
-                if (Input.GetMouseButton(0)) { timer -= Time.deltaTime; }
                 if (Input.GetMouseButtonUp(0)) { StopStandby(); }
-                if (timer < 0f) { OnPlay(); }
                 break;
             case State.PLAY:
                 timer -= Time.deltaTime;
@@ -93,6 +95,7 @@ public class GameController : MonoBehaviour
 
         messageText.text = "";
         subMessage.SetActive(false);
+        waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
         quitButton.SetActive(false);
         shareButton.SetActive(false);
@@ -111,15 +114,15 @@ public class GameController : MonoBehaviour
     public void OnStandby()
     {
         state = State.STANDBY;
-        timer = 3f;
         subMessage.SetActive(true);
         kumoMain.SetActive(false);
+        yuka.SetActive(false);
     }
 
     public void StartStandby()
     {
-        timer = 3f;
         subMessage.SetActive(false);
+        waitImgGo.SetActive(true);
         animator.Play("StandbyToPlay");
         messageText.color = ColorDef.black;
         messageText.text = "用\n\n意";
@@ -130,6 +133,7 @@ public class GameController : MonoBehaviour
         animator.Play("Standby");
         messageText.text = "";
         subMessage.SetActive(true);
+        waitImgGo.SetActive(false);
     }
 
     public void OnPlay()
@@ -143,7 +147,7 @@ public class GameController : MonoBehaviour
         messageText.text = "は\nじ\nめ";
 
         quitButton.SetActive(true);
-        yuka.SetActive(false);
+        quitButton.GetComponent<MaterialButton>().textText = "やめる";
     }
 
     public void OnQuitButtonClicked()
@@ -173,8 +177,8 @@ public class GameController : MonoBehaviour
     {
         state = State.RESULT;
 
+        quitButton.GetComponent<MaterialButton>().textText = "おわる";
         shareButton.SetActive(true);
-        //retryButton.SetActive(true);
     }
 
     protected Texture2D currentScreenShotTexture;
@@ -213,10 +217,15 @@ public class GameController : MonoBehaviour
         {
             scoreText = string.Format("お重を10秒で{0}cm積み上げました！すばらしい！", score);
         }
-        else
+        else if (score < 150)
         {
             scoreText = string.Format("お重を10秒で{0}cm積み上げました！すごすぎる！", score);
         }
+        else
+        {
+            scoreText = string.Format("お重を10秒で{0}cm積み上げました！やばすぎる！", score);
+        }
+
         string linkUrl = "https://sgtkraft.github.io/oju-10seconds/";   // ツイートに挿入するURL
         string hashtags = "すがたくらふと,お重10Seconds,Unity";        // ツイートに挿入するハッシュタグ
 
