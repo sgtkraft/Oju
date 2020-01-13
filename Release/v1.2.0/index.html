@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Oju10Seconds</title>
+
+    <!-- Font Awesome -->
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="../css/style.css" rel="stylesheet">
+
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      UnityLoader.SystemInfo.mobile = false;
+      var gameInstance = UnityLoader.instantiate("gameContainer2", "Build/oju.json");
+    </script>
+
+    <meta name="twitter:card" content="summary"/>
+    <meta property="og:url" content="https://sgtkraft.github.io/oju-10seconds/"/>
+    <meta property="og:title" content="お重10Seconds"/>
+    <meta property="og:description" content="「すがたくらふと」のあっさりゲーム\n10秒間で「お重」をたくさん積み上げよう！"/>
+    <meta property="og:image" content="https://sgtkraft.github.io/img/ogp/Oju10Seconds.png"/>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Title -->
+      <!-- <h1 class="flex-center color-primary-text">お重10Seconds</h1> -->
+
+      <!-- <h5 class="pc flex-center color-main-text" align="center">
+        Frame Outsidersは同人サークル「串寿司(くしずし)」が開発しています
+      </h5>
+      <h5 class="sp flex-center color-main-text" align="center">
+        Frame Outsidersは同人サークル<br>「串寿司(くしずし)」が開発しています
+      </h5> -->
+
+      <div class="card animated fadeIn">
+        <div class="card-body" align="center">
+          <!-- <div id="gameContainer" style="width: 600px; height: 1000px; margin: auto"></div> -->
+          <div id="gameContainer2"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div id="gameContainer" style="width: 600px; height: 1000px; margin: auto"></div> -->
+  </body>
+</html>
