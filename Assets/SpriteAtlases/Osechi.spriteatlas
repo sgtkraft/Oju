@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Osechi
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 20bcd14c8e72e43dca1ed40ee7f1f6e9, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d7a4b742011e148baa19ce7ef009854b, type: 3}
+  - {fileID: 21300000, guid: eca8264341e2448568e461f546d379f1, type: 3}
+  - {fileID: 21300000, guid: 05a70ae4f5a994984a106ca3cba841d3, type: 3}
+  - {fileID: 21300000, guid: fa3ea0e572c1b4bba8627160ea19935c, type: 3}
+  - {fileID: 21300000, guid: a1fa008d1904e41b29367f00ff3c7e50, type: 3}
+  - {fileID: 21300000, guid: eae57c0f5e40d4a3fa3876f6c44014c9, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - kobumaki
+  - ebi
+  - datemaki
+  - kazunoko
+  - oju
+  - kuromame
+  m_Tag: Osechi
+  m_IsVariant: 0
