@@ -18,46 +18,45 @@ public class PlayerController : MonoBehaviour
     private Vector3 clickPosition;
 
 	// Use this for initialization
-	private void Awake ()
+	private void Awake()
     {
         prefab.GetComponent<OjuController>().Init(gc);
     }
 	
 	// Update is called once per frame
-	private void Update ()
+	private void Update()
     {
-        if (gc.state == GameController.State.STANDBY ||
-            gc.state == GameController.State.PLAY)
+        switch (gc.state)
         {
-            cursor.SetActive(true);
-            cursor.transform.position = GetCursorPosition();
-        }
-        else
-        {
-            cursor.SetActive(false);
-        }
-
-        // マウス入力で左クリックをした瞬間
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (gc.state == GameController.State.TITLE)
-            {
-                clickPosition = Input.mousePosition;
-                clickPosition.z = 10f;
-                clickPosition = Camera.main.ScreenToWorldPoint(clickPosition);
-
-                if (clickPosition.y > -1f)
+            case GameController.State.TITLE:
+                if (Input.GetMouseButtonDown(0))
                 {
-                    Instantiate(prefab, clickPosition, prefab.transform.rotation, prefabParent);
-                }
-            }
+                    clickPosition = Input.mousePosition;
+                    clickPosition.z = 10f;
+                    clickPosition = Camera.main.ScreenToWorldPoint(clickPosition);
 
-            if (gc.state == GameController.State.PLAY)
-            {
-                // オブジェクト生成 : オブジェクト(GameObject), 位置(Vector3), 角度(Quaternion)
-                // ScreenToWorldPoint(位置(Vector3))：スクリーン座標をワールド座標に変換する
-                Instantiate(prefab, GetCursorPosition(), prefab.transform.rotation, prefabParent);
-            }
+                    if (clickPosition.y > -1f)
+                    {
+                        Instantiate(prefab, clickPosition, prefab.transform.rotation, prefabParent);
+                    }
+                }
+                cursor.SetActive(false);
+                break;
+            case GameController.State.STANDBY:
+                cursor.transform.position = GetCursorPosition();
+                cursor.SetActive(true);
+                break;
+            case GameController.State.PLAY:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Instantiate(prefab, GetCursorPosition(), prefab.transform.rotation, prefabParent);
+                }
+                cursor.transform.position = GetCursorPosition();
+                cursor.SetActive(true);
+                break;
+            default:
+                cursor.SetActive(false);
+                break;
         }
 	}
 

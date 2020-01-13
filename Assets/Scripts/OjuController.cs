@@ -13,7 +13,6 @@ public class OjuController : MonoBehaviour
     public Vector3[] corners = new Vector3[4];
 
     private RectTransform rt;
-    private Rigidbody2D rb;
     private Material material;
 
     private float timer = 0f;
@@ -30,7 +29,6 @@ public class OjuController : MonoBehaviour
     private void Awake()
     {
         rt = GetComponent<RectTransform>();
-        rb = GetComponent<Rigidbody2D>();
         material = GetComponent<Renderer>().material;
     }
 
@@ -44,12 +42,6 @@ public class OjuController : MonoBehaviour
 
         switch(gc.state)
         {
-            //case GameController.State.SCORE:
-            //    if (gameObject.layer == (int)GameController.Layer.Oju)
-            //    {
-            //        rb.bodyType = RigidbodyType2D.Dynamic;
-            //    }
-            //    break;
             case GameController.State.SCORE:
                 if (gameObject.layer == (int)GameController.Layer.OjuGrounded)
                 {

@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
         TOSCORE,
         SCORE,
         //TORESULT,
-        RESULT,
+        //RESULT,
         TOTITLE,
     }
     public State state = State.TITLE;
@@ -41,10 +41,9 @@ public class GameController : MonoBehaviour
     public Image timerImage;
 
     public Text messageText;
-    public GameObject waitImgGo;
-    public GameObject subMessage, scoreTitle;
-    public GameObject quitButton, shareButton, retryButton;
-    public GameObject kumoMain, yuka;
+    public GameObject waitImgGo, subMessage, scoreTitle, kumoMain;
+
+    public MaterialButton startBtn, quitBtn, shareBtn, retryBtn;
 
     public int score;
     private float timer = 10f;
@@ -59,12 +58,12 @@ public class GameController : MonoBehaviour
         subMessage.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
-        quitButton.SetActive(false);
-        shareButton.SetActive(false);
-        retryButton.SetActive(false);
+
+        quitBtn.gameObject.SetActive(false);
+        shareBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(true);
-        yuka.SetActive(true);
     }
 
     // Update is called once per frame
@@ -84,27 +83,11 @@ public class GameController : MonoBehaviour
         }
 	}
 
-    public void SetState(State nextState)
-    {
-        state = nextState;
-    }
-
     public void OnTitle()
     {
-        state = State.TOTITLE;
-        timerImage.enabled = false;
-        isScored = false;
+        state = State.TITLE;
 
-        messageText.text = "";
-        subMessage.SetActive(false);
-        waitImgGo.SetActive(false);
-        scoreTitle.SetActive(false);
-        quitButton.SetActive(false);
-        shareButton.SetActive(false);
-        retryButton.SetActive(false);
-
-        kumoMain.SetActive(true);
-        yuka.SetActive(true);
+        startBtn.interactable = true;
     }
 
     public void OnStartButtonClicked()
@@ -116,9 +99,9 @@ public class GameController : MonoBehaviour
     public void OnStandby()
     {
         state = State.STANDBY;
+
+        messageText.text = "";
         subMessage.SetActive(true);
-        kumoMain.SetActive(false);
-        yuka.SetActive(false);
     }
 
     public void StartStandby()
@@ -148,13 +131,9 @@ public class GameController : MonoBehaviour
         messageText.color = ColorDef.black;
         messageText.text = "は\nじ\nめ";
 
-        quitButton.SetActive(true);
-        quitButton.GetComponent<MaterialButton>().textText = "やめる";
-    }
-
-    public void OnQuitButtonClicked()
-    {
-        animator.Play("Quit");
+        quitBtn.textText = "やめる";
+        quitBtn.interactable = true;
+        quitBtn.gameObject.SetActive(true);
     }
 
     public void Finish()
@@ -172,11 +151,8 @@ public class GameController : MonoBehaviour
         if(!isScored)
         {
             isScored = true;
-            Debug.Log("scored");
             return;
         }
-
-        Debug.Log("scored2");
         state = State.SCORE;
 
         messageText.text = "";
@@ -185,91 +161,105 @@ public class GameController : MonoBehaviour
 
     public void Result()
     {
-        state = State.RESULT;
+        quitBtn.textText = "おわる";
 
-        quitButton.GetComponent<MaterialButton>().textText = "おわる";
-        shareButton.SetActive(true);
-    }
+        shareBtn.interactable = true;
+        shareBtn.gameObject.SetActive(true);
 
-    protected Texture2D currentScreenShotTexture;
-
-    protected IEnumerator UpdateCurrentScreenShot()
-    {
-        // これがないとReadPixels()でエラーになる
-        yield return new WaitForEndOfFrame();
-
-        currentScreenShotTexture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
-        currentScreenShotTexture.Apply();
+        retryBtn.interactable = true;
+        retryBtn.gameObject.SetActive(true);
     }
 
     public void OnShareButtonClicked()
     {
-        // スクリーンショット用のTexture2D用意
-        //currentScreenShotTexture = new Texture2D(Screen.width, Screen.height);
+        StartCoroutine(Share());
+    }
 
-        //StartCoroutine(UpdateCurrentScreenShot());
-
-        //byte[] imageBytes = currentScreenShotTexture.EncodeToPNG();
-        //var encodedImage = System.Convert.ToBase64String(imageBytes);
-        //Debug.Log(imageBytes);
-        //Debug.Log(encodedImage);
-
-        string scoreText = ""; // ツイートに挿入するテキスト
+    private IEnumerator Share()
+    {
+        string scoreStr; // ツイートに挿入するテキスト
         if (score == 0)
         {
-            scoreText = string.Format("お重を10秒でたくさん積み上げ、徳の高さを誇示しよう！");
+            scoreStr = string.Format("お重を10秒でたくさん積み上げ、徳の高さを誇示しよう！");
         }
         else if (score < 50)
         {
-            scoreText = string.Format("お重を10秒で{0}cm積み上げました！めでたい！", score);
+            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！めでたい！", score);
         }
         else if (score < 100)
         {
-            scoreText = string.Format("お重を10秒で{0}cm積み上げました！すばらしい！", score);
+            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！すばらしい！", score);
         }
         else if (score < 150)
         {
-            scoreText = string.Format("お重を10秒で{0}cm積み上げました！すごすぎる！", score);
+            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！すごすぎる！", score);
         }
         else
         {
-            scoreText = string.Format("お重を10秒で{0}cm積み上げました！やばすぎる！", score);
+            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！やばすぎる！", score);
         }
 
         string linkUrl = "https://sgtkraft.github.io/oju-10seconds/";   // ツイートに挿入するURL
-        string hashtags = "すがたくらふと,お重10Seconds,Unity";        // ツイートに挿入するハッシュタグ
+        string hashtags = "#すがたくらふと #お重10Seconds #Unity";        // ツイートに挿入するハッシュタグ
 
-        // ツイート画面を開く
-        var url = "https://twitter.com/intent/tweet?"
-            + "text=" + scoreText
-            + "&url=" + linkUrl
-            + "&hashtags=" + hashtags;
+        quitBtn.gameObject.SetActive(false);
+        shareBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
 
-        Debug.Log(url);
+        // スクリーンショットを撮影しツイート
+        string tweetStr = string.Format("{0}\nゲームはこちら→ {1}\n{2}\n", scoreStr, linkUrl, hashtags);
+        Debug.Log(tweetStr);
+        yield return StartCoroutine(ShareManager.TweetWithScreenShot(tweetStr));
 
-#if UNITY_EDITOR
-        Application.OpenURL(url);
-#elif UNITY_WEBGL
-        // WebGLの場合は、ゲームプレイ画面と同じウィンドウでツイート画面が開かないよう、処理を変える
-        Application.ExternalEval(string.Format("window.open('{0}','_blank')", url));
-#else
-        Application.OpenURL(url);
-#endif
+        quitBtn.gameObject.SetActive(true);
+        shareBtn.gameObject.SetActive(true);
+        retryBtn.gameObject.SetActive(true);
+
+        yield break;
+    }
+
+    public void OnQuitButtonClicked()
+    {
+        animator.Play("Quit");
+    }
+
+    public void Quit()
+    {
+        state = State.TOTITLE;
+        timerImage.enabled = false;
+        isScored = false;
+
+        messageText.text = "";
+        subMessage.SetActive(false);
+        waitImgGo.SetActive(false);
+        scoreTitle.SetActive(false);
+
+        quitBtn.gameObject.SetActive(false);
+        shareBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
+
+        kumoMain.SetActive(true);
     }
 
     public void OnRetryButtonClicked()
     {
-        state = State.TOSTANDBY;
         animator.Play("Retry");
     }
 
     public void Retry()
     {
+        state = State.TOSTANDBY;
         timerImage.enabled = false;
-        scoreTitle.SetActive(false);
-        shareButton.SetActive(false);
-        retryButton.SetActive(false);
+        isScored = false;
 
-        OnStandby();
+        messageText.text = "";
+        waitImgGo.SetActive(false);
+        scoreTitle.SetActive(false);
+
+        quitBtn.gameObject.SetActive(false);
+        shareBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
+
+        kumoMain.SetActive(false);
     }
 }
