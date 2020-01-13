@@ -12,17 +12,16 @@ public class ScoreController : MonoBehaviour
     public GameObject panel, valueParent, lineParent, line;
 
     private Rigidbody2D rb;
-    private Collider2D col;
     private Vector3 defaultPos;
     private List<Image> imageList = new List<Image>();
 
-    private bool isScored, isDone = false;
+    private bool isScored, isDone;
 
     void Awake()
     {
         rb = line.GetComponent<Rigidbody2D>();
-        col = line.GetComponent<Collider2D>();
         defaultPos = line.transform.position;
+        isDone = false;
     }
 	
 	// Update is called once per frame
@@ -42,6 +41,19 @@ public class ScoreController : MonoBehaviour
                 break;
             case GameController.State.TOSTANDBY:
                 isDone = false;
+
+                imageTemp.gameObject.SetActive(false);
+                panel.SetActive(false);
+                valueParent.SetActive(false);
+                lineParent.SetActive(false);
+
+                line.transform.position = new Vector3(line.transform.position.x, defaultPos.y, line.transform.position.z);
+                for (int i = imageList.Count; i > 0; i--)
+                {
+                    Image img = imageList[i - 1];
+                    imageList.Remove(img);
+                    Destroy(img.gameObject);
+                }
                 break;
             case GameController.State.SCORE:
                 if (isDone) { return; }

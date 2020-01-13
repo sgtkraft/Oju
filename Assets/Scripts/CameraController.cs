@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
                 if (timer >= interval)
                 {
                     isTouched = Physics2D.Linecast(
-                        new Vector2(-3, transform.position.y - 3),
-                        new Vector2(3, transform.position.y - 3),
+                        new Vector2(-3, transform.position.y - 2),
+                        new Vector2(3, transform.position.y - 2),
                         1 << (int)GameController.Layer.OjuGrounded
                     );
                     isTouchedHigh = Physics2D.Linecast(
@@ -66,23 +66,17 @@ public class CameraController : MonoBehaviour
                 }
                 break;
             case GameController.State.SCORE: // プレイ終了後、初期位置までカメラを移動させる
-            case GameController.State.RESULT:
                 isTouched = Physics2D.Linecast(
                     new Vector2(-3, transform.position.y + 2),
                     new Vector2(3, transform.position.y + 2),
                     1 << (int)GameController.Layer.ScoreLine
                 );
 
-                if (isTouched)
-                {
-                    SetVelocity(4);
-                }
-                else
-                {
-                    SetVelocity(0);
-                }
+                if (isTouched) { SetVelocity(4); }
+                else { SetVelocity(0); }
                 break;
-            case GameController.State.TOTITLE:
+            //case GameController.State.TOTITLE:
+            default:
                 SetVelocity(0);
                 transform.position = defaultPos;
                 isTouched = false;

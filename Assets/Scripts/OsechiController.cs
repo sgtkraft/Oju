@@ -24,8 +24,12 @@ public class OsechiController : MonoBehaviour
                 if (timer > 3f) { gameObject.layer = (int)GameController.Layer.OsechiTransparent; }
                 break;
             case GameController.State.TOSTANDBY:
-                gameObject.layer = (int)GameController.Layer.OsechiTransparent;
-                rb.velocity = new Vector2(8f, 0);
+                if (rb.bodyType != RigidbodyType2D.Static)
+                {
+                    gameObject.layer = (int)GameController.Layer.OsechiTransparent;
+                    rb.velocity = new Vector2(7f, 0f);
+                }
+                else { Destroy(this.gameObject); }
                 break;
             case GameController.State.SCORE:
                 rb.bodyType = RigidbodyType2D.Static;

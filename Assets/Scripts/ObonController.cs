@@ -30,6 +30,11 @@ public class ObonController : MonoBehaviour
     {
         switch (gc.state)
         {
+            //case GameController.State.TITLE:
+            //case GameController.State.TOSTANDBY:
+            //    transform.position = defaultPos;
+            //    cursorGo.SetActive(false);
+            //    break;
             case GameController.State.PLAY:
                 timer += Time.deltaTime;
                 if (timer >= interval || transform.position.x < -1.45f || transform.position.x > 1.45f)
@@ -42,15 +47,15 @@ public class ObonController : MonoBehaviour
                 ShowCursor();
                 break;
             case GameController.State.TOSCORE:
-            case GameController.State.SCORE:
                 rb.bodyType = RigidbodyType2D.Static;
                 ShowCursor();
                 break;
-            case GameController.State.TOTITLE:
-                transform.position = defaultPos;
+            case GameController.State.SCORE:
+                cursorGo.SetActive(false);
                 break;
             default:
                 rb.bodyType = RigidbodyType2D.Static;
+                transform.position = defaultPos;
                 cursorGo.SetActive(false);
                 isRendered = false;
                 break;
