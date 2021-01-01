@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 namespace MaterialUI
 {
@@ -114,11 +115,11 @@ namespace MaterialUI
         /// The button's text.
         /// </summary>
         [SerializeField]
-        private Text m_Text;
+        private TextMeshProUGUI m_Text;
         /// <summary>
         /// The button's text.
         /// </summary>
-        public Text text
+        public TextMeshProUGUI text
         {
             get { return m_Text; }
             set

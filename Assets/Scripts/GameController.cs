@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using CommonDefine;
+using MaterialUI;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using MaterialUI;
-using CommonDefine;
+using NCMB;
 
 public class GameController : MonoBehaviour
 {
@@ -14,11 +16,10 @@ public class GameController : MonoBehaviour
         TOSTANDBY,
         STANDBY,
         PLAY,
-        //FINISH,
         TOSCORE,
         SCORE,
-        //TORESULT,
-        //RESULT,
+        TORANK,
+        RANK,
         TOTITLE,
     }
     public State state = State.TITLE;
@@ -40,30 +41,52 @@ public class GameController : MonoBehaviour
     public Sprite[] numberSprites;
     public Image timerImage;
 
-    public Text messageText;
-    public GameObject waitImgGo, subMessage, scoreTitle, kumoMain;
+    public TextMeshProUGUI messageText;
+    public GameObject waitImgGo, subMessage, scoreTitle, kumoMain, rankGo;
 
-    public MaterialButton startBtn, quitBtn, shareBtn, retryBtn;
+    public MaterialButton startBtn, quitBtn, retryBtn, shareBtn, registerBtn, endBtn;
 
-    public int score;
+    public int score, rankBorder = 999;
+    public bool canRegister = true;
+
     private float timer = 10f;
     private bool isScored;
+
+    private int ttl2StbHash = Animator.StringToHash("TitleToStandby");
+    private int stb2PlyHash = Animator.StringToHash("StandbyToPlay");
+    private int standbyHash = Animator.StringToHash("Standby");
+    private int playHash = Animator.StringToHash("Play");
+    private int finishHash = Animator.StringToHash("Finish");
+    private int retryHash = Animator.StringToHash("Retry");
+    private int rankHash = Animator.StringToHash("Rank");
+    private int quitHash = Animator.StringToHash("Quit");
+
+    private string startCountObjId = "JpNZ9fCRkg72BVTY";
+    private string playCountObjId = "ljjHcsTPL6IoxTPf";
+    private int playCount = 0;
+
+    private AtsumaruManager am = null;
 
     // Use this for initialization
     private void Awake()
     {
         timerImage.enabled = false;
 
-        messageText.text = "";
+        messageText.SetText(string.Empty);
         subMessage.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
+        rankGo.SetActive(false);
 
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(true);
+
+#if OJU_ATSUMARU
+        am = GetComponent<AtsumaruManager>();
+#endif
     }
 
     // Update is called once per frame
@@ -88,35 +111,74 @@ public class GameController : MonoBehaviour
         state = State.TITLE;
 
         startBtn.interactable = true;
+
+        // プレイカウントをリセット
+        playCount = 0;
+
+#if OJU_ATSUMARU
+        // シーンリセット
+        am.ChangeScene("Main", true);
+#endif
     }
 
     public void OnStartButtonClicked()
     {
         state = State.TOSTANDBY;
-        animator.Play("TitleToStandby");
+        animator.Play(ttl2StbHash);
+
+        // ObjectIdをもとにデータ取得を行う
+        NCMBObject obj = new NCMBObject("Count");
+        obj.ObjectId = startCountObjId;
+        obj.FetchAsync((NCMBException e) =>
+        {
+            if (e != null)
+            {
+                // 取得失敗時の処理
+            }
+            else
+            {
+                // 取得成功時の処理
+                // スタートカウント加算
+                obj.Increment("count");
+                obj.SaveAsync();
+            }
+        });
+
+        // プレイカウント加算
+        playCount++;
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Start");
+#endif
     }
 
     public void OnStandby()
     {
         state = State.STANDBY;
 
-        messageText.text = "";
+        messageText.SetText(string.Empty);
         subMessage.SetActive(true);
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Standby");
+#endif
     }
 
     public void StartStandby()
     {
         subMessage.SetActive(false);
         waitImgGo.SetActive(true);
-        animator.Play("StandbyToPlay");
+        animator.Play(stb2PlyHash);
         messageText.color = ColorDef.black;
-        messageText.text = "用\n\n意";
+        messageText.SetText("用\n\n意");
     }
 
     public void StopStandby()
     {
-        animator.Play("Standby");
-        messageText.text = "";
+        animator.Play(standbyHash);
+        messageText.SetText(string.Empty);
         subMessage.SetActive(true);
         waitImgGo.SetActive(false);
     }
@@ -127,13 +189,18 @@ public class GameController : MonoBehaviour
         timerImage.enabled = true;
         timer = 10f;
 
-        animator.Play("Play");
+        animator.Play(playHash);
         messageText.color = ColorDef.black;
-        messageText.text = "は\nじ\nめ";
+        messageText.SetText("は\nじ\nめ");
 
         quitBtn.textText = "やめる";
         quitBtn.interactable = true;
         quitBtn.gameObject.SetActive(true);
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Play");
+#endif
     }
 
     public void Finish()
@@ -141,9 +208,14 @@ public class GameController : MonoBehaviour
         state = State.TOSCORE;
         timerImage.enabled = false;
 
-        animator.Play("Finish");
+        animator.Play(finishHash);
         messageText.color = ColorDef.red;
-        messageText.text = "そこまで";
+        messageText.SetText("そこまで");
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Finish");
+#endif
     }
 
     public void OnScore()
@@ -155,7 +227,7 @@ public class GameController : MonoBehaviour
         }
         state = State.SCORE;
 
-        messageText.text = "";
+        messageText.SetText(string.Empty);
         scoreTitle.SetActive(true);
     }
 
@@ -168,6 +240,11 @@ public class GameController : MonoBehaviour
 
         retryBtn.interactable = true;
         retryBtn.gameObject.SetActive(true);
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Result");
+#endif
     }
 
     public void OnShareButtonClicked()
@@ -220,7 +297,63 @@ public class GameController : MonoBehaviour
 
     public void OnQuitButtonClicked()
     {
-        animator.Play("Quit");
+        switch (state)
+        {
+            case State.SCORE:
+                OnRankButtonClicked();
+                animator.Play(rankHash);
+                break;
+            default:
+                animator.Play(quitHash);
+                break;
+        }
+
+        // ObjectIdをもとにデータ取得を行う
+        NCMBObject obj = new NCMBObject("Count");
+        obj.ObjectId = playCountObjId;
+        obj.FetchAsync((NCMBException e) =>
+        {
+            if (e != null)
+            {
+                // 取得失敗時の処理
+            }
+            else
+            {
+                // 取得成功時の処理
+                // プレイカウント加算
+                obj.Increment("count", playCount);
+                obj.SaveAsync();
+            }
+        });
+    }
+
+    public void OnRankButtonClicked()
+    {
+        state = State.TORANK;
+
+        rankGo.SetActive(true);
+
+        quitBtn.gameObject.SetActive(false);
+        shareBtn.gameObject.SetActive(false);
+        retryBtn.gameObject.SetActive(false);
+    }
+
+    public void OnRank()
+    {
+        state = State.RANK;
+
+        registerBtn.interactable = canRegister;
+        endBtn.interactable = true;
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Rank");
+#endif
+    }
+
+    public void OnEndButtonClicked()
+    {
+        animator.Play(quitHash);
     }
 
     public void Quit()
@@ -229,10 +362,11 @@ public class GameController : MonoBehaviour
         timerImage.enabled = false;
         isScored = false;
 
-        messageText.text = "";
+        messageText.SetText(string.Empty);
         subMessage.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
+        rankGo.SetActive(false);
 
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
@@ -243,7 +377,10 @@ public class GameController : MonoBehaviour
 
     public void OnRetryButtonClicked()
     {
-        animator.Play("Retry");
+        animator.Play(retryHash);
+
+        // プレイカウント加算
+        playCount++;
     }
 
     public void Retry()
@@ -252,7 +389,7 @@ public class GameController : MonoBehaviour
         timerImage.enabled = false;
         isScored = false;
 
-        messageText.text = "";
+        messageText.SetText(string.Empty);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
 
@@ -261,5 +398,10 @@ public class GameController : MonoBehaviour
         retryBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(false);
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Retry");
+#endif
     }
 }

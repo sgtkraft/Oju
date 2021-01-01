@@ -65,7 +65,8 @@ public class CameraController : MonoBehaviour
                     }
                 }
                 break;
-            case GameController.State.SCORE: // プレイ終了後、初期位置までカメラを移動させる
+            case GameController.State.SCORE: // お重とラインが重ならなくなるまでカメラを移動させる
+            case GameController.State.TORANK:
                 isTouched = Physics2D.Linecast(
                     new Vector2(-3, transform.position.y + 2),
                     new Vector2(3, transform.position.y + 2),
