@@ -51,6 +51,7 @@ public class ObonController : MonoBehaviour
                 ShowCursor();
                 break;
             case GameController.State.SCORE:
+            case GameController.State.TORANK:
                 cursorGo.SetActive(false);
                 break;
             default:

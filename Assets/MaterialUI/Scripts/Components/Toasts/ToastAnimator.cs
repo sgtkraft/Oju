@@ -4,6 +4,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 namespace MaterialUI
 {
@@ -11,7 +12,7 @@ namespace MaterialUI
     public class ToastAnimator : MonoBehaviour
     {
         [SerializeField]
-        protected Text m_Text;
+        protected TextMeshProUGUI m_Text;
 
         [SerializeField]
         protected RectTransform m_RectTransform;
