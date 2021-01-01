@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using System.Xml.Linq;
 using System;
 using System.Runtime.InteropServices;
@@ -12,7 +13,7 @@ public class ShareManager : MonoBehaviour
     [DllImport("__Internal")] private static extern void OpenNewWindow(string url);
 
     [SerializeField] string clientID;
-    [SerializeField] UnityEngine.UI.Text debugTxt;
+    [SerializeField] Text debugTxt;
 
     private static ShareManager instance;
 
@@ -84,17 +85,20 @@ public class ShareManager : MonoBehaviour
         //}
 
         // Twitter投稿用URL
-        string TweetURL = "https://twitter.com/intent/tweet?text=" + UnityWebRequest.EscapeURL(str);
-        Instance.debugTxt.text += ("\n" + TweetURL);
+        string tweetUrl = "https://twitter.com/intent/tweet?text=" + UnityWebRequest.EscapeURL(str);
+        Instance.debugTxt.text += ("\n" + tweetUrl);
 
 #if UNITY_EDITOR
-        System.Diagnostics.Process.Start(TweetURL);
+        System.Diagnostics.Process.Start(tweetUrl);
         Instance.debugTxt.text += "\nEditor";
+#elif OJU_ATSUMARU
+        AtsumaruManager.Instance.OpenLink(tweetUrl);
+        Instance.debugTxt.text += "\nAtsumaru";
 #elif UNITY_WEBGL
-        OpenNewWindow(TweetURL);
+        OpenNewWindow(tweetUrl);
         Instance.debugTxt.text += "\nWebGL";
 #else
-        Application.OpenURL(TweetURL);
+        Application.OpenURL(tweetUrl);
         Instance.debugTxt.text += "\nOther";
 #endif
     }
