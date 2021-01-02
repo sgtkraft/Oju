@@ -1,32 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObonController : MonoBehaviour
 {
     public GameController gc;
 
-    public UnityEngine.UI.Text debugTxt;
+    public Text debugTxt;
 
     public GameObject cursorGo;
     public float interval = 0.5f;
+    public bool isRendered = false;
 
     private Rigidbody2D rb;
+    private RectTransform cursorRt;
     private Vector3 defaultPos;
     private int direction;
     private float timer;
-    public bool isRendered = false;
 
     // Use this for initialization
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        cursorRt = cursorGo.GetComponent<RectTransform>();
         defaultPos = transform.position;
         direction = (Random.Range(-1, 1) == 0) ? 1 : -1;
-	}
+    }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         switch (gc.state)
         {
@@ -80,8 +83,8 @@ public class ObonController : MonoBehaviour
     private void ShowCursor()
     {
         cursorGo.SetActive(!isRendered);
-        cursorGo.GetComponent<RectTransform>().anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x, 0f, 0f);
+        cursorRt.anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x / (Screen.width / 600), 0f, 0f);
         isRendered = false;
-        debugTxt.text = "IsRendered: " + isRendered + "\nCursor: " + cursorGo.GetComponent<RectTransform>().anchoredPosition.x;
+        debugTxt.text = "IsRendered: " + isRendered + "\nCursor: " + cursorRt.anchoredPosition.x;
     }
 }

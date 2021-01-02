@@ -220,7 +220,7 @@ public class GameController : MonoBehaviour
 
     public void OnScore()
     {
-        if(!isScored)
+        if (!isScored)
         {
             isScored = true;
             return;
