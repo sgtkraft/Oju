@@ -17,6 +17,8 @@ public class ShareManager : MonoBehaviour
 
     private static ShareManager instance;
 
+    private static AtsumaruManager am = null;
+
     public string ClientID
     {
         get
@@ -41,6 +43,13 @@ public class ShareManager : MonoBehaviour
             }
             return instance;
         }
+    }
+
+    private void Awake()
+    {
+#if OJU_ATSUMARU
+        am = GetComponent<AtsumaruManager>();
+#endif
     }
 
     public static IEnumerator TweetWithScreenShot(string str)
@@ -92,7 +101,7 @@ public class ShareManager : MonoBehaviour
         System.Diagnostics.Process.Start(tweetUrl);
         Instance.debugTxt.text += "\nEditor";
 #elif OJU_ATSUMARU
-        AtsumaruManager.Instance.OpenLink(tweetUrl);
+        am.OpenLink(tweetUrl);
         Instance.debugTxt.text += "\nAtsumaru";
 #elif UNITY_WEBGL
         OpenNewWindow(tweetUrl);
