@@ -7,8 +7,6 @@ public class ObonController : MonoBehaviour
 {
     public GameController gc;
 
-    public Text debugTxt;
-
     public GameObject cursorGo;
     public float interval = 0.5f;
     public bool isRendered = false;
@@ -83,8 +81,8 @@ public class ObonController : MonoBehaviour
     private void ShowCursor()
     {
         cursorGo.SetActive(!isRendered);
-        cursorRt.anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x / (Screen.width / 600), 0f, 0f);
+        cursorRt.anchoredPosition = new Vector3(RectTransformUtility.WorldToScreenPoint(Camera.main, transform.localPosition).x / (Screen.width / 540.0f), 0f, 0f);
         isRendered = false;
-        debugTxt.text = "IsRendered: " + isRendered + "\nCursor: " + cursorRt.anchoredPosition.x;
+        if (gc.isDebugActive) { gc.debugText.text = "IsRendered: " + isRendered + "\nCursor: " + cursorRt.anchoredPosition.x; }
     }
 }
