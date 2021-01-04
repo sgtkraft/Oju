@@ -49,6 +49,10 @@ public class GameController : MonoBehaviour
     public int score, rankBorder = 999;
     public bool canRegister = true;
 
+    [Space(8)]
+    public Text debugText;
+    public bool isDebugActive = false;
+
     private float timer = 10f;
     private bool isScored;
 
@@ -65,7 +69,9 @@ public class GameController : MonoBehaviour
     private string playCountObjId = "ljjHcsTPL6IoxTPf";
     private int playCount = 0;
 
+#if OJU_ATSUMARU
     private AtsumaruManager am = null;
+#endif
 
     // Use this for initialization
     private void Awake()
@@ -83,6 +89,8 @@ public class GameController : MonoBehaviour
         retryBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(true);
+
+        isDebugActive = debugText.enabled;
 
 #if OJU_ATSUMARU
         am = GetComponent<AtsumaruManager>();
@@ -126,6 +134,13 @@ public class GameController : MonoBehaviour
         state = State.TOSTANDBY;
         animator.Play(ttl2StbHash);
 
+        // プレイカウント加算
+        playCount++;
+
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.OnEventRaised("Start");
+#elif !UNITY_EDITOR
         // ObjectIdをもとにデータ取得を行う
         NCMBObject obj = new NCMBObject("Count");
         obj.ObjectId = startCountObjId;
@@ -143,13 +158,6 @@ public class GameController : MonoBehaviour
                 obj.SaveAsync();
             }
         });
-
-        // プレイカウント加算
-        playCount++;
-
-#if OJU_ATSUMARU
-        // イベントトリガー
-        am.OnEventRaised("Start");
 #endif
     }
 
@@ -159,6 +167,7 @@ public class GameController : MonoBehaviour
 
         messageText.SetText(string.Empty);
         subMessage.SetActive(true);
+        kumoMain.SetActive(false);
 
 #if OJU_ATSUMARU
         // イベントトリガー
@@ -308,6 +317,7 @@ public class GameController : MonoBehaviour
                 break;
         }
 
+#if !UNITY_EDITOR && !OJU_ATSUMARU
         // ObjectIdをもとにデータ取得を行う
         NCMBObject obj = new NCMBObject("Count");
         obj.ObjectId = playCountObjId;
@@ -325,6 +335,7 @@ public class GameController : MonoBehaviour
                 obj.SaveAsync();
             }
         });
+#endif
     }
 
     public void OnRankButtonClicked()
