@@ -13,11 +13,15 @@ public class ShareManager : MonoBehaviour
     [DllImport("__Internal")] private static extern void OpenNewWindow(string url);
 
     [SerializeField] string clientID;
-    [SerializeField] Text debugTxt;
+
+    [SerializeField] Text debugText;
+    private static bool isDebugActive = false;
 
     private static ShareManager instance;
 
+#if OJU_ATSUMARU
     private static AtsumaruManager am = null;
+#endif
 
     public string ClientID
     {
@@ -47,6 +51,8 @@ public class ShareManager : MonoBehaviour
 
     private void Awake()
     {
+        isDebugActive = debugText.enabled;
+
 #if OJU_ATSUMARU
         am = GetComponent<AtsumaruManager>();
 #endif
@@ -95,20 +101,20 @@ public class ShareManager : MonoBehaviour
 
         // Twitter投稿用URL
         string tweetUrl = "https://twitter.com/intent/tweet?text=" + UnityWebRequest.EscapeURL(str);
-        Instance.debugTxt.text += ("\n" + tweetUrl);
+        if (isDebugActive) { Instance.debugText.text += ("\n" + tweetUrl); }
 
 #if UNITY_EDITOR
         System.Diagnostics.Process.Start(tweetUrl);
-        Instance.debugTxt.text += "\nEditor";
+        if (isDebugActive) { Instance.debugText.text += "\nEditor"; }
 #elif OJU_ATSUMARU
         am.OpenLink(tweetUrl);
-        Instance.debugTxt.text += "\nAtsumaru";
+        if (isDebugActive) { Instance.debugText.text += "\nAtsumaru"; }
 #elif UNITY_WEBGL
         OpenNewWindow(tweetUrl);
-        Instance.debugTxt.text += "\nWebGL";
+        if (isDebugActive) { Instance.debugText.text += "\nWebGL"; }
 #else
         Application.OpenURL(tweetUrl);
-        Instance.debugTxt.text += "\nOther";
+        if (isDebugActive) { Instance.debugText.text += "\nOther"; }
 #endif
     }
 }

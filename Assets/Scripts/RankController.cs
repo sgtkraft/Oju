@@ -11,7 +11,7 @@ public class RankController : MonoBehaviour
     public GameController gc;
 
     public TextMeshProUGUI myRankText;
-    public InputField nameInput;
+    public MaterialDropdown[] nameDropdowns = new MaterialDropdown[3];
 
     public RankCell tempCell;
     public RectTransform listParentRt;
@@ -47,15 +47,13 @@ public class RankController : MonoBehaviour
         }
     }
 
-    public void OnNameValueChanged()
-    {
-        // アルファベット小文字が入力されたら大文字にする
-        nameInput.text = nameInput.text.ToUpper();
-    }
-
     public void RegisterData()
     {
-        string name = nameInput.text;
+        string name = string.Empty;
+        foreach (MaterialDropdown dropdown in nameDropdowns)
+        {
+            name += dropdown.buttonTextContent.text;
+        }
         int score = gc.score;
 
         NCMBObject obj = new NCMBObject("HighScore");
@@ -90,6 +88,8 @@ public class RankController : MonoBehaviour
             {
                 // 順位取得失敗
                 ToastManager.Show("データの取得に失敗しました");
+                myRankText.SetText("---");
+                gc.canRegister = false;
             }
             else
             {
