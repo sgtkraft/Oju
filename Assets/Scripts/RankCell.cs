@@ -1,20 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using MaterialUI;
-using TMPro;
-using NCMB;
 
 public class RankCell : MonoBehaviour
 {
-    public TextMeshProUGUI rankText, nameText, scoreText;
+    public TextMeshProUGUI rankText, nameValueText, nameUnitText, scoreText;
 
     public void Init(int rank, string name, int score)
     {
         rankText.SetText(rank.ToString());
-        nameText.SetText(name);
+        nameValueText.SetText(name);
         scoreText.SetText(score.ToString());
+
+#if OJU_ATSUMARU
+        nameValueText.fontSize = 20;
+        nameUnitText.gameObject.SetActive(true);
+#else
+        nameValueText.fontSize = 40;
+        nameUnitText.gameObject.SetActive(false);
+#endif
 
         gameObject.SetActive(true);
     }

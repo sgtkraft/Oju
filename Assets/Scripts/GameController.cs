@@ -70,7 +70,7 @@ public class GameController : MonoBehaviour
     private int playCount = 0;
 
 #if OJU_ATSUMARU
-    private AtsumaruManager am = null;
+    [HideInInspector] public AtsumaruManager am = null;
 #endif
 
     // Use this for initialization
@@ -94,6 +94,10 @@ public class GameController : MonoBehaviour
 
 #if OJU_ATSUMARU
         am = GetComponent<AtsumaruManager>();
+        registerBtn.gameObject.SetActive(false);
+#else
+        registerBtn.textText = "スコア登録";
+        registerBtn.gameObject.SetActive(true);
 #endif
     }
 
@@ -359,6 +363,14 @@ public class GameController : MonoBehaviour
 #if OJU_ATSUMARU
         // イベントトリガー
         am.OnEventRaised("Rank");
+#endif
+    }
+
+    public void OnBoardButtonClicked()
+    {
+#if OJU_ATSUMARU
+        // イベントトリガー
+        am.ShowScoreboard(1);
 #endif
     }
 
