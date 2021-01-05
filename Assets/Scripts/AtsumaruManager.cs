@@ -1,4 +1,6 @@
 ﻿using RpgAtsumaruApiForUnity;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class AtsumaruManager : MonoBehaviour
@@ -18,7 +20,6 @@ public class AtsumaruManager : MonoBehaviour
         // 同期を必ず最初に行い、サーバーからデータを貰うようにして下さい
         await RpgAtsumaruApi.StorageApi.SyncSaveDataAsync();
     }
-#endif
 
     /// <summary>
     /// データ入出力
@@ -103,4 +104,48 @@ public class AtsumaruManager : MonoBehaviour
         // 外部リンクを開いてRPGアツマールから結果を受け取るまで待機（表示完了の待機ではありません）
         await RpgAtsumaruApi.GeneralApi.OpenLinkAsync(url);
     }
+
+    /// <summary>
+    /// スコアボード制御
+    /// </summary>
+
+    // 指定されたボードIDにスコアデータを送信します
+    // 送信できるスコアボードの数は、RPGアツマールのAPI管理画面にて調整する事が出来ます。
+    // 既定の数は10個までとなっています。
+    public async void SendScore(int boardId, long score, Action<bool> callback)
+    {
+        // RPGアツマールにスコアを送信する
+        var (isError, _) = await RpgAtsumaruApi.ScoreboardApi.SendScoreAsync(boardId, score);
+        callback(isError);
+    }
+
+    public async void SendScore(int boardId, long score)
+    {
+        // RPGアツマールにスコアを送信する
+        await RpgAtsumaruApi.ScoreboardApi.SendScoreAsync(boardId, score);
+    }
+
+    // 指定されたスコアボードIDのスコアボードをRPGアツマール上に表示します
+    public async void ShowScoreboard(int boardId)
+    {
+        // 非同期の表示呼び出しをする（表示されたかどうかの待機ではなく、処理の結果待機であることに注意して下さい）
+        await RpgAtsumaruApi.ScoreboardApi.ShowScoreboardAsync(boardId);
+    }
+
+    // RPGアツマールのスコアサーバーからスコアボードのデータを取得します
+    public async void GetScoreboardData(int boardId, Action<RpgAtsumaruScoreboardData, bool> callback)
+    {
+        // 非同期の取得呼び出しをする（タプル型で返されるため3つ目の結果だけを受け取る場合は以下の通りに実装すると良いでしょう）
+        var (isError, _, scoreboardData) = await RpgAtsumaruApi.ScoreboardApi.GetScoreboardAsync(boardId);
+        callback(scoreboardData, isError);
+    }
+
+    // RPGアツマールのスコアサーバーからスコアボードのデータを取得します
+    public async Task<RpgAtsumaruScoreboardData> GetScoreboardData(int boardId)
+    {
+        // 非同期の取得呼び出しをする（タプル型で返されるため3つ目の結果だけを受け取る場合は以下の通りに実装すると良いでしょう）
+        var (_, _, scoreboardData) = await RpgAtsumaruApi.ScoreboardApi.GetScoreboardAsync(boardId);
+        return scoreboardData;
+    }
+#endif
 }

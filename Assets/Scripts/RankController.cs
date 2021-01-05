@@ -1,16 +1,19 @@
-﻿using System;
+﻿using RpgAtsumaruApiForUnity;
+using MaterialUI;
+using NCMB;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using MaterialUI;
-using TMPro;
-using NCMB;
 
 public class RankController : MonoBehaviour
 {
     public GameController gc;
 
-    public TextMeshProUGUI myRankText;
+    public TextMeshProUGUI titleText, myRankText, myNameValueText, myScoreText;
     public MaterialDropdown[] nameDropdowns = new MaterialDropdown[3];
 
     public RankCell tempCell;
@@ -18,14 +21,32 @@ public class RankController : MonoBehaviour
     public Animator listAnimator;
 
     private List<RankCell> cellList = new List<RankCell>();
-    private bool isDone;
+    private bool needFetch, isDone;
 
     private int showHash = Animator.StringToHash("Show");
     private int defaultHash = Animator.StringToHash("Default");
 
+    // ハイスコアボードID(アツマール用)
+#if OJU_ATSUMARU
+    private int highScoreBoardId = 1;
+#endif
+
     private void Awake()
     {
+        needFetch = true;
         isDone = false;
+
+#if OJU_ATSUMARU
+        titleText.SetText("これまでのハイスコア");
+        myNameValueText.transform.parent.gameObject.SetActive(true);
+        myScoreText.transform.parent.gameObject.SetActive(true);
+        nameDropdowns[0].transform.parent.gameObject.SetActive(false);
+#else
+        titleText.SetText("今回のスコアランク");
+        myNameValueText.transform.parent.gameObject.SetActive(false);
+        myScoreText.transform.parent.gameObject.SetActive(false);
+        nameDropdowns[0].transform.parent.gameObject.SetActive(true);
+#endif
     }
 
     // Update is called once per frame
@@ -34,20 +55,44 @@ public class RankController : MonoBehaviour
         switch (gc.state)
         {
             case GameController.State.TORANK:
-                if (isDone) { return; }
-
-                FetchRank(gc.score);
-                FetchTopData();
-
-                isDone = true;
+                if (!needFetch) { return; }
+                FetchData();
+                needFetch = false;
                 break;
             default:
+                if (!needFetch) { needFetch = true; }
                 if (isDone) { isDone = false; }
                 break;
         }
     }
 
+    /// <summary>
+    /// スコア登録/更新
+    /// </summary>
     public void RegisterData()
+    {
+#if !OJU_ATSUMARU
+        RegisterData4Ncmb();
+#endif
+    }
+
+    /// <summary>
+    /// ランク情報取得
+    /// </summary>
+    public void FetchData()
+    {
+#if OJU_ATSUMARU
+        FetchRank4Atsumaru(gc.score);
+#else
+        FetchRank4Ncmb(gc.score);
+        FetchTopData4Ncmb();
+#endif
+    }
+
+    /// <summary>
+    /// スコア登録(NCMB)
+    /// </summary>
+    private void RegisterData4Ncmb()
     {
         string name = string.Empty;
         foreach (MaterialDropdown dropdown in nameDropdowns)
@@ -63,25 +108,28 @@ public class RankController : MonoBehaviour
         {
             if (e != null)
             {
-                // 保存失敗時の処理
-                ToastManager.Show("データの保存に失敗しました");
+                // 登録失敗時の処理
+                ToastManager.Show("スコア登録に失敗しました");
             }
             else
             {
-                // 保存成功時の処理
-                ToastManager.Show("データの保存に成功しました");
+                // 登録成功時の処理
                 // リスト非表示
                 listAnimator.Play(defaultHash);
-                FetchTopData();
+                FetchTopData4Ncmb();
             }
         });
     }
 
-    public void FetchRank(int score)
+    /// <summary>
+    /// NCMBからランク情報を取得
+    /// </summary>
+    private void FetchRank4Ncmb(int score)
     {
         // データスコアの「HighScore」から検索
         NCMBQuery<NCMBObject> rankQuery = new NCMBQuery<NCMBObject>("HighScore");
         rankQuery.WhereGreaterThan("score", score);
+
         rankQuery.CountAsync((int count, NCMBException e) =>
         {
             if (e != null)
@@ -110,8 +158,12 @@ public class RankController : MonoBehaviour
         });
     }
 
-    public void FetchTopData()
+    /// <summary>
+    /// NCMBからTOP100情報を取得
+    /// </summary>
+    private void FetchTopData4Ncmb()
     {
+        // データスコアの「HighScore」から検索
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("HighScore");
 
         // Scoreフィールドの降順でデータを取得
@@ -151,5 +203,88 @@ public class RankController : MonoBehaviour
 
         // リスト表示
         listAnimator.Play(showHash, 0, 0.0f);
+    }
+
+    /// <summary>
+    /// アツマールからランク情報を取得
+    /// </summary>
+    private void FetchRank4Atsumaru(int score)
+    {
+#if OJU_ATSUMARU
+        myRankText.SetText("---");
+        myNameValueText.SetText("？？？");
+        myScoreText.SetText("0");
+
+        // スコアを登録
+        gc.am.SendScore(highScoreBoardId, score, (isError) =>
+        {
+            if (isError)
+            {
+                // 更新失敗時の処理
+                ToastManager.Show("スコア更新に失敗しました");
+
+                // リスト表示
+                listAnimator.Play(showHash, 0, 0.0f);
+            }
+            else
+            {
+                // 更新成功時の処理
+                gc.am.GetScoreboardData(highScoreBoardId, (data, isError2) =>
+                {
+                    if (isError2)
+                    {
+                        // 取得失敗時の処理
+                        ToastManager.Show("データ取得に失敗しました");
+
+                        // リスト表示
+                        listAnimator.Play(showHash, 0, 0.0f);
+                    }
+                    else
+                    {
+                        // 取得成功時の処理
+                        // ユーザー名取得
+                        if (data.myBestRecor.Available)
+                        {
+                            if (data.myBestRecor.rank <= gc.rankBorder)
+                            {
+                                myRankText.SetText(data.myBestRecor.rank.ToString());
+                            }
+                            else
+                            {
+                                myRankText.SetText(string.Format("{0}+", gc.rankBorder.ToString()));
+                            }
+                            myNameValueText.SetText(string.Format("{0}", data.myBestRecor.userName));
+                            myScoreText.SetText(data.myBestRecor.score.ToString());
+                        }
+
+                        // リストリセット
+                        foreach (RankCell cell in cellList)
+                        {
+                            Destroy(cell.gameObject);
+                        }
+                        cellList.Clear();
+
+                        // ランク取得
+                        //ToastManager.Show("データが" + data.ranking.Length + "個見つかりました");
+                        for (int count = 0; count < data.ranking.Length; count++)
+                        {
+                            RpgAtsumaruRanking rankData = data.ranking[count];
+
+                            int curRank = count + 1;
+                            string curName = string.Format("{0}", rankData.userName);
+                            int curScore = (int)rankData.score;
+
+                            RankCell cell = Instantiate(tempCell, listParentRt);
+                            cell.Init(curRank, curName, curScore);
+                            cellList.Add(cell);
+                        }
+
+                        // リスト表示
+                        listAnimator.Play(showHash, 0, 0.0f);
+                    }
+                });
+            }
+        });
+#endif
     }
 }
