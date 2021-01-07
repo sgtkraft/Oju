@@ -36,15 +36,16 @@ public class GameController : MonoBehaviour
         ScoreLine = 14,
     }
 
-    public Animator animator;
+    public Animator animator, guideAnimator;
 
     public Sprite[] numberSprites;
     public Image timerImage;
 
     public TextMeshProUGUI messageText;
+    //public TextMeshProUGUI guideText;
     public GameObject waitImgGo, subMessage, scoreTitle, kumoMain, rankGo;
 
-    public MaterialButton startBtn, quitBtn, retryBtn, shareBtn, registerBtn, endBtn;
+    public MaterialButton startBtn, quitBtn, shareBtn, retryBtn, rankBtn, registerBtn, endBtn;
 
     public int score, rankBorder = 999;
     public bool canRegister = true;
@@ -54,7 +55,7 @@ public class GameController : MonoBehaviour
     public bool isDebugActive = false;
 
     private float timer = 10f;
-    private bool isScored;
+    private bool isScored, needGuide = true;
 
     private int ttl2StbHash = Animator.StringToHash("TitleToStandby");
     private int stb2PlyHash = Animator.StringToHash("StandbyToPlay");
@@ -65,9 +66,14 @@ public class GameController : MonoBehaviour
     private int rankHash = Animator.StringToHash("Rank");
     private int quitHash = Animator.StringToHash("Quit");
 
+    private int guideShowHash = Animator.StringToHash("Show");
+    private int guideDefaultHash = Animator.StringToHash("Default");
+
     private string startCountObjId = "JpNZ9fCRkg72BVTY";
     private string playCountObjId = "ljjHcsTPL6IoxTPf";
     private int playCount = 0;
+
+    private RankController rc;
 
 #if OJU_ATSUMARU
     [HideInInspector] public AtsumaruManager am = null;
@@ -79,6 +85,7 @@ public class GameController : MonoBehaviour
         timerImage.enabled = false;
 
         messageText.SetText(string.Empty);
+        //guideText.gameObject.SetActive(false);
         subMessage.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
@@ -87,10 +94,13 @@ public class GameController : MonoBehaviour
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
+        rankBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(true);
 
         isDebugActive = debugText.enabled;
+
+        rc = GetComponent<RankController>();
 
 #if OJU_ATSUMARU
         am = GetComponent<AtsumaruManager>();
@@ -111,8 +121,22 @@ public class GameController : MonoBehaviour
                 if (Input.GetMouseButtonUp(0)) { StopStandby(); }
                 break;
             case State.PLAY:
+                if (needGuide)
+                {
+                    if (Input.GetMouseButtonDown(0)) { needGuide = false; }
+                    if (timer < 8f)
+                    {
+                        guideAnimator.Play(guideShowHash, 0, 0.0f);
+                        needGuide = false;
+                    }
+                }
+                else
+                {
+                    if (Input.GetMouseButtonDown(0)) { guideAnimator.Play(guideDefaultHash, 0, 0.0f); }
+                }
                 timer -= Time.deltaTime;
                 timerImage.sprite = numberSprites[(int)timer];
+                
                 if (timer < 0f) { Finish(); }
                 break;
         }
@@ -201,10 +225,13 @@ public class GameController : MonoBehaviour
         state = State.PLAY;
         timerImage.enabled = true;
         timer = 10f;
+        needGuide = true;
 
         animator.Play(playHash);
         messageText.color = ColorDef.black;
         messageText.SetText("は\nじ\nめ");
+        //guideText.alpha = 1f;
+        //guideText.gameObject.SetActive(true);
 
         quitBtn.textText = "やめる";
         quitBtn.interactable = true;
@@ -216,6 +243,15 @@ public class GameController : MonoBehaviour
 #endif
     }
 
+    public void ChangeGuideAlpha(float value)
+    {
+        float alpha = 1 - (value / 4f);
+        //if (guideText.alpha > 0f)
+        //{
+        //    guideText.alpha = alpha;
+        //};
+    }
+
     public void Finish()
     {
         state = State.TOSCORE;
@@ -224,6 +260,9 @@ public class GameController : MonoBehaviour
         animator.Play(finishHash);
         messageText.color = ColorDef.red;
         messageText.SetText("そこまで");
+        //guideText.gameObject.SetActive(false);
+
+        guideAnimator.Play(guideDefaultHash, 0, 0.0f);
 
 #if OJU_ATSUMARU
         // イベントトリガー
@@ -254,7 +293,12 @@ public class GameController : MonoBehaviour
         retryBtn.interactable = true;
         retryBtn.gameObject.SetActive(true);
 
+        rankBtn.interactable = true;
+        rankBtn.gameObject.SetActive(true);
+
 #if OJU_ATSUMARU
+        // スコア登録
+        rc.RegisterData();
         // イベントトリガー
         am.OnEventRaised("Result");
 #endif
@@ -267,43 +311,44 @@ public class GameController : MonoBehaviour
 
     private IEnumerator Share()
     {
-        string scoreStr; // ツイートに挿入するテキスト
+        string scoreStr = "#すがたくらふと のあっさりゲーム「 #お重10Seconds 」\n"; // ツイートに挿入するテキスト
         if (score == 0)
         {
-            scoreStr = string.Format("お重を10秒でたくさん積み上げ、徳の高さを誇示しよう！");
-        }
-        else if (score < 50)
-        {
-            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！めでたい！", score);
+            scoreStr += string.Format("お重を10秒でたくさん積み上げ、徳の高さを示そう！\n");
         }
         else if (score < 100)
         {
-            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！すばらしい！", score);
+            scoreStr += string.Format("お重を10秒で{0}cm積み上げました！おめでたい！\n", score);
         }
         else if (score < 150)
         {
-            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！すごすぎる！", score);
+            scoreStr += string.Format("お重を10秒で{0}cm積み上げました！すばらしい！\n", score);
+        }
+        else if (score < 200)
+        {
+            scoreStr += string.Format("お重を10秒で{0}cm積み上げました！すごすぎる！\n", score);
+        }
+        else if (score < 250)
+        {
+            scoreStr += string.Format("お重を10秒で{0}cm積み上げました！やばすぎる！\n", score);
         }
         else
         {
-            scoreStr = string.Format("お重を10秒で{0}cm積み上げました！やばすぎる！", score);
+            scoreStr += string.Format("お重を10秒で{0}cm積み上げました！信じられない！\n", score);
         }
-
-        string linkUrl = "https://sgtkraft.github.io/oju-10seconds/";   // ツイートに挿入するURL
-        string hashtags = "#すがたくらふと #お重10Seconds #Unity";        // ツイートに挿入するハッシュタグ
 
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
+        rankBtn.gameObject.SetActive(false);
 
         // スクリーンショットを撮影しツイート
-        string tweetStr = string.Format("{0}\nゲームはこちら→ {1}\n{2}\n", scoreStr, linkUrl, hashtags);
-        Debug.Log(tweetStr);
-        yield return StartCoroutine(ShareManager.TweetWithScreenShot(tweetStr));
+        yield return StartCoroutine(ShareManager.TweetWithScreenShot(scoreStr));
 
         quitBtn.gameObject.SetActive(true);
         shareBtn.gameObject.SetActive(true);
         retryBtn.gameObject.SetActive(true);
+        rankBtn.gameObject.SetActive(true);
 
         yield break;
     }
@@ -316,6 +361,7 @@ public class GameController : MonoBehaviour
                 OnRankButtonClicked();
                 animator.Play(rankHash);
                 break;
+
             default:
                 animator.Play(quitHash);
                 break;
@@ -351,6 +397,7 @@ public class GameController : MonoBehaviour
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
+        rankBtn.gameObject.SetActive(false);
     }
 
     public void OnRank()
@@ -386,6 +433,7 @@ public class GameController : MonoBehaviour
         isScored = false;
 
         messageText.SetText(string.Empty);
+        //guideText.gameObject.SetActive(false);
         subMessage.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
@@ -394,6 +442,7 @@ public class GameController : MonoBehaviour
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
+        rankBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(true);
     }
@@ -413,12 +462,14 @@ public class GameController : MonoBehaviour
         isScored = false;
 
         messageText.SetText(string.Empty);
+        //guideText.gameObject.SetActive(false);
         waitImgGo.SetActive(false);
         scoreTitle.SetActive(false);
 
         quitBtn.gameObject.SetActive(false);
         shareBtn.gameObject.SetActive(false);
         retryBtn.gameObject.SetActive(false);
+        rankBtn.gameObject.SetActive(false);
 
         kumoMain.SetActive(false);
 

@@ -11,6 +11,7 @@ public class ShareManager : MonoBehaviour
 {
     // JS関数の呼び出し
     [DllImport("__Internal")] private static extern void OpenNewWindow(string url);
+    [DllImport("__Internal")] private static extern string GetWebUrl();
 
     [SerializeField] string clientID;
 
@@ -64,7 +65,7 @@ public class ShareManager : MonoBehaviour
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         // imgurへアップロード
-        string UploadedURL = "";
+        string uploadedURL = string.Empty;
 
         UnityWebRequest www;
 
@@ -89,18 +90,35 @@ public class ShareManager : MonoBehaviour
             // TwitterCard用に拡張子を外す
             string url = xDoc.Element("data").Element("link").Value;
             url = url.Remove(url.Length - 4, 4);
-            UploadedURL = url;
+            uploadedURL = url;
         }
 
-        str += UploadedURL;
-        //string hashtags = "&hashtags=";
-        //if (sinstance.hashTags.Length > 0)
-        //{
-        //    hashtags += string.Join (",", sinstance.hashTags);
-        //}
+        string hashtags = "#Unity #indiedev"; // ツイートに挿入するハッシュタグ
+        string gameUrl = string.Empty; // ゲームのURL
+#if UNITY_EDITOR
+        gameUrl = "https://sgtkraft.github.io/oju-10seconds/";
+        str += string.Format("{0}\n{1}\n{2}", hashtags, gameUrl, uploadedURL);
+#elif OJU_ATSUMARU
+        hashtags += " #RPGアツマール";
+        gameUrl = "https://game.nicovideo.jp/atsumaru/games/gm17898";
+        str += string.Format("{0}\n{1}", hashtags, gameUrl);
+#elif UNITY_WEBGL
+        string referrer = GetWebUrl();
+        if (referrer.Contains("unityroom"))
+        {
+            hashtags += " #unityroom";
+            gameUrl = "https://unityroom.com/games/oju-10seconds";
+        }
+        else
+        {
+            gameUrl = "https://sgtkraft.github.io/oju-10seconds/";
+        }
+        str += string.Format("{0}\n{1}\n{2}", hashtags, gameUrl, uploadedURL);
+#endif
 
         // Twitter投稿用URL
         string tweetUrl = "https://twitter.com/intent/tweet?text=" + UnityWebRequest.EscapeURL(str);
+        if (isDebugActive) { Instance.debugText.text += ("\n" + gameUrl); }
         if (isDebugActive) { Instance.debugText.text += ("\n" + tweetUrl); }
 
 #if UNITY_EDITOR
