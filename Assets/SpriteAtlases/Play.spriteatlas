@@ -44,6 +44,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ccf690a4753b8422fbb5acb9cbdcf323, type: 3}
   - {fileID: 21300000, guid: ab91cb857780d486a86f2f8a46c310e1, type: 3}
   - {fileID: 21300000, guid: c2467f86fcb864bde8a3aff25f5fccdc, type: 3}
+  - {fileID: 21300000, guid: d05ca0f65283044b68e1839a8a68090f, type: 3}
   - {fileID: 21300000, guid: 25081078cd3784956b2d25ffab0b37a6, type: 3}
   - {fileID: 21300000, guid: aa002809d627d400fafddc5ebb6549bc, type: 3}
   - {fileID: 21300000, guid: dab2ce6a01d6d4596bcf335956e3bcc4, type: 3}
@@ -65,10 +66,11 @@ SpriteAtlas:
   - back
   - 2
   - obon
+  - quit
   - wait
   - 5
   - 03
-  - Twitter_Logo_White
+  - twitter
   - 4
   - 9
   - 3
