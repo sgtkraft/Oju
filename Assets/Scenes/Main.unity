@@ -5573,7 +5573,6 @@ MonoBehaviour:
   canRegister: 0
   debugText: {fileID: 1496009679}
   isDebugActive: 0
-  am: {fileID: 0}
 --- !u!114 &636485995
 MonoBehaviour:
   m_ObjectHideFlags: 0

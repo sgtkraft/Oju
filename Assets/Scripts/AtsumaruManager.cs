@@ -147,5 +147,13 @@ public class AtsumaruManager : MonoBehaviour
         var (_, _, scoreboardData) = await RpgAtsumaruApi.ScoreboardApi.GetScoreboardAsync(boardId);
         return scoreboardData;
     }
+
+    // スクリーンショットを撮る
+    public async void ScreenShot()
+    {
+        // スクリーンショットAPIを呼んで待機する
+        //（投稿されるまでの待機ではなく、スクリーンショットを撮った後にRPGアツマールからの応答を待つ待機であることに注意して下さい）
+        await RpgAtsumaruApi.GeneralApi.ScreenshotAsync();
+    }
 #endif
 }

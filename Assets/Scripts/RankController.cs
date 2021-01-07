@@ -213,8 +213,10 @@ public class RankController : MonoBehaviour
     /// </summary>
     private void RegisterData4Atsumaru()
     {
+#if OJU_ATSUMARU
         // スコアを登録
         gc.am.SendScore(highScoreBoardId, gc.score);
+#endif
     }
 
     /// <summary>

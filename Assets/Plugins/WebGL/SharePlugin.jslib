@@ -1,14 +1,20 @@
-﻿var SharePlugin =
-{
-    // 指定されたURLを開くJavascript
-    OpenNewWindow: function(openUrl)
+﻿mergeInto(
+    LibraryManager.library,
     {
-        // 引数の定義
-        var url = Pointer_stringify(openUrl);
-
-        // 名前を指定して新しいウィンドウを開く
-        window.open(url, "ShareWindow");
+        GetWebUrl: function()
+        {
+            // WebGL実行中のURLを取得する
+            //var url = window.location.href;
+            var returnStr = document.referrer;
+            var bufferSize = lengthBytesUTF8(returnStr) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(returnStr, buffer, bufferSize);
+            return buffer;
+        },
+        OpenNewWindow: function(openUrl)
+        {
+            // URLを指定して新しいウィンドウを開く
+            window.open(Pointer_stringify(openUrl), "ShareWindow");
+        },
     }
-};
-
-mergeInto(LibraryManager.library, SharePlugin);
+);

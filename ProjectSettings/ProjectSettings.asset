@@ -574,18 +574,18 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    1: OJU_ATSUMARU
-    4: OJU_ATSUMARU
-    7: OJU_ATSUMARU
-    13: OJU_ATSUMARU
-    14: OJU_ATSUMARU
-    19: OJU_ATSUMARU
-    21: OJU_ATSUMARU
-    25: OJU_ATSUMARU
-    27: OJU_ATSUMARU
-    28: OJU_ATSUMARU
-    29: OJU_ATSUMARU
-    30: OJU_ATSUMARU
+    1: 
+    4: 
+    7: 
+    13: 
+    14: 
+    19: 
+    21: 
+    25: 
+    27: 
+    28: 
+    29: 
+    30: 
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration: {}
