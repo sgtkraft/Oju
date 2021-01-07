@@ -28,61 +28,74 @@ public class CameraController : MonoBehaviour
         switch (gc.state)
         {
             case GameController.State.PLAY:
-                timer += Time.deltaTime;
-                if (timer >= interval)
                 {
-                    isTouched = Physics2D.Linecast(
-                        new Vector2(-3, transform.position.y - 2),
-                        new Vector2(3, transform.position.y - 2),
-                        1 << (int)GameController.Layer.OjuGrounded
-                    );
-                    isTouchedHigh = Physics2D.Linecast(
-                        new Vector2(-3, transform.position.y),
-                        new Vector2(3, transform.position.y),
-                        1 << (int)GameController.Layer.OjuGrounded
-                    );
-                    timer = 0f;
-                }
-
-                if (isTouched && isTouchedHigh) { SetVelocity(5); } // カメラとお重の相対高によって移動速度を変化
-                else if (isTouched) { SetVelocity(3); }
-                else if (transform.position.y > defaultPos.y) { SetVelocity(-6); }
-                else { SetVelocity(0); }
-                break;
-            case GameController.State.TOSCORE: // プレイ終了後、初期位置までカメラを移動させる
-                if (transform.position.y > defaultPos.y)
-                {
-                    SetVelocity(-6);
-                }
-                else
-                {
-                    SetVelocity(0);
-                    transform.position = defaultPos;
-                    if(!isScored)
+                    timer += Time.deltaTime;
+                    if (timer >= interval)
                     {
-                        isScored = true;
-                        gc.OnScore();
+                        isTouched = Physics2D.Linecast(
+                            new Vector2(-3, transform.position.y - 2),
+                            new Vector2(3, transform.position.y - 2),
+                            1 << (int)GameController.Layer.OjuGrounded
+                        );
+                        isTouchedHigh = Physics2D.Linecast(
+                            new Vector2(-3, transform.position.y),
+                            new Vector2(3, transform.position.y),
+                            1 << (int)GameController.Layer.OjuGrounded
+                        );
+                        timer = 0f;
+                    }
+
+                    if (isTouched && isTouchedHigh) { SetVelocity(5); } // カメラとお重の相対高によって移動速度を変化
+                    else if (isTouched) { SetVelocity(3); }
+                    else if (transform.position.y > defaultPos.y) { SetVelocity(-6); }
+                    else { SetVelocity(0); }
+
+                    gc.ChangeGuideAlpha(transform.position.y); // カメラの高さに合わせてガイドテキストのアルファ値を制御
+                }
+                break;
+
+            case GameController.State.TOSCORE: // プレイ終了後、初期位置までカメラを移動させる
+                {
+                    if (transform.position.y > defaultPos.y)
+                    {
+                        SetVelocity(-6);
+                    }
+                    else
+                    {
+                        SetVelocity(0);
+                        transform.position = defaultPos;
+                        if (!isScored)
+                        {
+                            isScored = true;
+                            gc.OnScore();
+                        }
                     }
                 }
                 break;
+
             case GameController.State.SCORE: // お重とラインが重ならなくなるまでカメラを移動させる
             case GameController.State.TORANK:
-                isTouched = Physics2D.Linecast(
-                    new Vector2(-3, transform.position.y + 2),
-                    new Vector2(3, transform.position.y + 2),
-                    1 << (int)GameController.Layer.ScoreLine
-                );
+                {
+                    isTouched = Physics2D.Linecast(
+                        new Vector2(-3, transform.position.y + 2),
+                        new Vector2(3, transform.position.y + 2),
+                        1 << (int)GameController.Layer.ScoreLine
+                    );
 
-                if (isTouched) { SetVelocity(4); }
-                else { SetVelocity(0); }
+                    if (isTouched) { SetVelocity(4); }
+                    else { SetVelocity(0); }
+                }
                 break;
+
             //case GameController.State.TOTITLE:
             default:
-                SetVelocity(0);
-                transform.position = defaultPos;
-                isTouched = false;
-                isTouchedHigh = false;
-                isScored = false;
+                {
+                    SetVelocity(0);
+                    transform.position = defaultPos;
+                    isTouched = false;
+                    isTouchedHigh = false;
+                    isScored = false;
+                }
                 break;
         }
 	}
