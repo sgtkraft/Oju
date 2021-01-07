@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Oju10Seconds</title>
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      UnityLoader.instantiate("unityContainer", "Build/oju.json");
+    </script>
+  </head>
+  <body>
+    <!-- <div id="unityContainer" style="width: 540px; height: 960px;"></div> -->
+    <div id="unityContainer" style="width: 100%; height: calc(100vw * 1.7778);"></div>
+    <!-- REPLACE UnityLoader.SystemInfo.hasWebGL?UnityLoader.SystemInfo.mobile?e.popup("Please note that Unity WebGL is not currently supported on mobiles. Press OK if you wish to continue anyway.",[{text:"OK",callback:t}]):["Edge","Firefox","Chrome","Safari"].indexOf(UnityLoader.SystemInfo.browser)==-1?e.popup("Please note that your browser is not currently supported for this Unity WebGL content. Press OK if you wish to continue anyway.",[{text:"OK",callback:t}]):t():e.popup("Your browser does not support WebGL",[{text:"OK",callback:r}]) TO t(); -->
+  </body>
+</html>

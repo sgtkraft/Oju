@@ -1,0 +1,16 @@
+{
+"companyName": "Sgtkraft",
+"productName": "Oju10Seconds",
+"productVersion": "1.4.1",
+"dataUrl": "oju.data.unityweb",
+"wasmCodeUrl": "oju.wasm.code.unityweb",
+"wasmFrameworkUrl": "oju.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "oju.jpg",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#FFFFFF",
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.17f1"
+}
